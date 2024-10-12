@@ -1,0 +1,36 @@
+{
+  "cards": [
+    {
+      "key": "1",
+      "name_event": "AKTIVITAS 1",
+      "date_event": "17 Oktober 2024",
+      "location_event": "Taman Hutan Raya, Bandung",
+      "event_type": "Lingkungan",
+      "imageUrl": "https://indorelawan-production.nos.wjv-1.neo.id/uploads/gallery/2024-10-09/Activity_1728445364683_Jadi-Relawan.jpg"
+    },
+    {
+      "key": "1",
+      "name_event": "AKTIVITAS 1",
+      "date_event": "17 Oktober 2024",
+      "location_event": "Taman Hutan Raya, Bandung",
+      "event_type": "Lingkungan",
+      "imageUrl": "https://indorelawan-production.nos.wjv-1.neo.id/uploads/gallery/2024-10-09/Activity_1728445364683_Jadi-Relawan.jpg"
+    },
+    {
+      "key": "1",
+      "name_event": "AKTIVITAS 1",
+      "date_event": "17 Oktober 2024",
+      "location_event": "Taman Hutan Raya, Bandung",
+      "event_type": "Lingkungan",
+      "imageUrl": "https://indorelawan-production.nos.wjv-1.neo.id/uploads/gallery/2024-10-09/Activity_1728445364683_Jadi-Relawan.jpg"
+    },
+    {
+      "key": "1",
+      "name_event": "AKTIVITAS 1",
+      "date_event": "17 Oktober 2024",
+      "location_event": "Taman Hutan Raya, Bandung",
+      "event_type": "Lingkungan",
+      "imageUrl": "https://indorelawan-production.nos.wjv-1.neo.id/uploads/gallery/2024-10-09/Activity_1728445364683_Jadi-Relawan.jpg"
+    }
+  ]
+}

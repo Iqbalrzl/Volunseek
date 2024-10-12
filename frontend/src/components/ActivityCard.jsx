@@ -1,9 +1,23 @@
 import PropTypes from "prop-types";
 import { Button } from "./ui/button";
+import { axiosInstance } from "@/lib/axios";
+import { useEffect } from "react";
 
 export const ActivityCard = (props) => {
   const { imageUrl, name_event, event_type, date_event, location_event } =
     props;
+
+  const loadActivity = async () => {
+    try {
+      await axiosInstance.get("/cards");
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  useEffect(() => {
+    loadActivity();
+  }, []);
 
   return (
     <div className="w-full max-w-xs sm:max-w-sm md:max-w-md lg:max-w-lg rounded-lg overflow-hidden shadow-lg bg-white cursor-pointer">

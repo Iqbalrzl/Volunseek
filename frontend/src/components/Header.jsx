@@ -18,10 +18,20 @@ export const Header = () => {
       </div>
 
       <div className="flex flex-1 justify-end items-center gap-6">
-        <Button variant="secondary" className="">
+        <Button
+          variant="secondary"
+          size="default"
+          className="bg-white text-[#1ABC9C] border-none hover:bg-[#1ABC9C] hover:text-white transition-colors duration-200"
+        >
           Masuk
         </Button>
-        <Button variant="secondary">Daftar</Button>
+        <Button
+          variant="secondary"
+          size="default"
+          className="bg-white text-[#1ABC9C] border-none hover:bg-[#1ABC9C] hover:text-white transition-colors duration-200"
+        >
+          Daftar
+        </Button>
       </div>
     </header>
   );
