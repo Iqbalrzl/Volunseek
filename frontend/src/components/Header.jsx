@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import { Button } from "./ui/button";
 import { WebTitle } from "./WebTitle";
 
@@ -18,13 +19,15 @@ export const Header = () => {
       </div>
 
       <div className="flex flex-1 justify-end items-center gap-6">
-        <Button
-          variant="secondary"
-          size="default"
-          className="bg-white text-[#1ABC9C] border-none hover:bg-[#1ABC9C] hover:text-white transition-colors duration-200"
-        >
-          Masuk
-        </Button>
+        <Link to="/login">
+          <Button
+            variant="secondary"
+            size="default"
+            className="bg-white text-[#1ABC9C] border-none hover:bg-[#1ABC9C] hover:text-white transition-colors duration-200"
+          >
+            Masuk
+          </Button>
+        </Link>
         <Button
           variant="secondary"
           size="default"

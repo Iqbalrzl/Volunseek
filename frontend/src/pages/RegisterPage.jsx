@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";
 import loginTitle from "@/assets/images/loginTitle.png";
 
-export const LoginPage = () => {
+export const RegisterPage = () => {
   return (
     <>
       <main className="min-h-screen bg-[#D1F2EB] flex justify-center items-center">
@@ -17,7 +17,7 @@ export const LoginPage = () => {
 
           {/* right Column (Input Fields) */}
           <div className="flex-1 flex flex-col justify-center ">
-            <h2 className="text-2xl font-bold mb-4">Masuk</h2>
+            <h2 className="text-2xl font-bold mb-4">Daftar</h2>
             <div className="mb-4">
               <input
                 id="username"
@@ -34,8 +34,16 @@ export const LoginPage = () => {
                 placeholder="Kata Sandi"
               />
             </div>
+            <div className="mb-4">
+              <input
+                id="password"
+                type="password"
+                className="border border-gray-300 p-2 rounded w-full"
+                placeholder="Konfirmasi Kata Sandi"
+              />
+            </div>
             <Button className="w-full bg-[#1ABC9C] text-white hover:bg-[#1ABC9C] hover:opacity-60">
-              Masuk
+              Daftar
             </Button>
           </div>
         </div>
