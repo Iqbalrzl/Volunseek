@@ -49,6 +49,7 @@ export const HomePage = () => {
         <div className="pb-10 md:w-auto text-center flex flex-col items-center ">
           <div className="relative flex justify-center w-full">
             <ImageSlide />
+
             <div className="absolute bottom-8 ">
               <p className="text-white font-medium text-3xl mb-8">
                 Bersama kita bisa membuat perubahan. Jadilah relawan!
