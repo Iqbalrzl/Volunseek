@@ -11,7 +11,7 @@ export const LoginPage = () => {
             <img
               src={loginTitle} // Replace with the desired image URL
               alt="Login Illustration"
-              className="w-4/6 h-4/6 rounded-lg"
+              className="w-4/6 h-auto rounded-lg object-cover"
             />
           </div>
 
@@ -26,7 +26,7 @@ export const LoginPage = () => {
                 placeholder="Nama"
               />
             </div>
-            <div className="mb-4">
+            <div className="mb-10">
               <input
                 id="password"
                 type="password"

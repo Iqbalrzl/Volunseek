@@ -1,24 +1,35 @@
-import { Header } from "@/components/Header";
 import aboutImg from "@/assets/images/aboutImg.png";
 
 export const AboutUs = () => {
   return (
-    <>
-      <Header />
-      <div className="min-h-[50vh] bg-[#D1F2EB] w-full m-0 relative">
-        <div className="absolute top-32 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-center">
-          <h2 className="text-3xl font-bold ">Kenali VolunSeek Lebih Dekat</h2>
+    <div className="min-h-fit">
+      <div className=" relative bg-[#D1F2EB] rounded-b-full ">
+        <div className="mx-auto mt-12 px-4 py-20 sm:px-6 lg:px-5">
+          <div className="text-center">
+            <h2 className="text-3xl font-bold sm:text-4xl text-slate-800">
+              Kenali VolunSeek Lebih Dekat
+            </h2>
+          </div>
+          {/* <div className="mt-10">
+            <img src={aboutImg} alt="" className="mx-auto max-w-full h-auto" />
+          </div> */}
         </div>
-        <img
-          src={aboutImg}
-          alt=""
-          className="absolute top-80 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-50"
-        />
       </div>
-      <main className="min-h-[80vh] md:w-auto mx-auto px-8 lg:px-16 mt-14 relative">
-        <div className="flex justify-center relative">
-          <div className="w-4/5 flex flex-col justify-center">
-            <p className="mt-36">
+      <main className="min-h-[70vh] max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <div className="flex justify-center flex-col md:flex-row md:items-center md:gap-8">
+          <div className="md:w-1/2">
+            {" "}
+            {/* Sesuaikan lebar di layar sedang */}
+            <img
+              src={aboutImg}
+              alt=""
+              className="mx-auto max-w-full h-auto mb-6 md:mb-0"
+            />
+          </div>
+          <div className="md:w-1/2">
+            {" "}
+            {/* Sesuaikan lebar di layar sedang */}
+            <p className="text-lg text-gray-700">
               Lorem ipsum, dolor sit amet consectetur adipisicing elit. Iste,
               perferendis! Magnam quasi rem quae cupiditate quis illo,
               reprehenderit blanditiis obcaecati repellat, nihil fuga adipisci
@@ -31,11 +42,14 @@ export const AboutUs = () => {
               perferendis quia nam impedit incidunt voluptates ratione sequi
               officiis commodi beatae totam facere quos praesentium reiciendis
               illo, iure alias repellendus! Aliquid aspernatur tempore nihil
-              ullam autem.
+              ullam autem. Lorem ipsum dolor sit amet consectetur adipisicing
+              elit. Recusandae laboriosam, sint consequatur vero repellat ipsam
+              nulla eius aut accusantium beatae deleniti dolor blanditiis ex
+              quibusdam molestias voluptas vel itaque consectetur.
             </p>
           </div>
         </div>
       </main>
-    </>
+    </div>
   );
 };

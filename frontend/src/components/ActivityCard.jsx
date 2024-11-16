@@ -1,10 +1,10 @@
-import PropTypes from "prop-types";
 import { Button } from "./ui/button";
 import { axiosInstance } from "@/lib/axios";
 import { useEffect } from "react";
+import { Link } from "react-router-dom";
 
 export const ActivityCard = (props) => {
-  const { imageUrl, name_event, event_type, date_event, location_event } =
+  const { id, imageUrl, name_event, event_type, date_event, location_event } =
     props;
 
   const loadActivity = async () => {
@@ -20,7 +20,7 @@ export const ActivityCard = (props) => {
   }, []);
 
   return (
-    <div className="w-full max-w-xs sm:max-w-sm md:max-w-md lg:max-w-lg rounded-lg overflow-hidden shadow-lg bg-white cursor-pointer">
+    <div className="w-full max-w-xs sm:max-w-sm md:max-w-md lg:max-w-lg rounded-lg overflow-hidden shadow-lg bg-white ">
       {/* Image Section */}
       <img
         src={imageUrl}
@@ -50,17 +50,12 @@ export const ActivityCard = (props) => {
         <p className="text-sm text-gray-600 mb-4">{location_event}</p>
 
         {/* Button */}
-        <Button className="w-full bg-[#D1F2EB] text-primary hover:bg-[#D1F2EB] hover:opacity-60">
-          Lihat Lebih Lengkap
-        </Button>
+        <Link to={"/detail-activity/" + id}>
+          <Button className="w-full bg-[#D1F2EB] text-primary hover:bg-[#D1F2EB] hover:opacity-60">
+            Lihat Lebih Lengkap
+          </Button>
+        </Link>
       </div>
     </div>
   );
-};
-ActivityCard.propTypes = {
-  imageUrl: PropTypes.string,
-  name_event: PropTypes.string,
-  event_type: PropTypes.string,
-  date_event: PropTypes.string,
-  location_event: PropTypes.string,
 };

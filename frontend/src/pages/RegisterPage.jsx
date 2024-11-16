@@ -11,7 +11,7 @@ export const RegisterPage = () => {
             <img
               src={loginTitle} // Replace with the desired image URL
               alt="Login Illustration"
-              className="w-4/6 h-4/6 rounded-lg"
+              className="w-4/6 rounded-lg object-cover"
             />
           </div>
 
@@ -34,7 +34,7 @@ export const RegisterPage = () => {
                 placeholder="Kata Sandi"
               />
             </div>
-            <div className="mb-4">
+            <div className="mb-8">
               <input
                 id="password"
                 type="password"

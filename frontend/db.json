@@ -1,36 +1,121 @@
 {
   "cards": [
     {
-      "key": "1",
+      "id": "1",
       "name_event": "AKTIVITAS 1",
       "date_event": "17 Oktober 2024",
       "location_event": "Taman Hutan Raya, Bandung",
       "event_type": "Lingkungan",
-      "imageUrl": "https://indorelawan-production.nos.wjv-1.neo.id/uploads/gallery/2024-10-09/Activity_1728445364683_Jadi-Relawan.jpg"
+      "imageUrl": "https://indorelawan-production.nos.wjv-1.neo.id/uploads/gallery/2024-10-09/Activity_1728445364683_Jadi-Relawan.jpg",
+      "desc": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
     },
     {
-      "key": "1",
-      "name_event": "AKTIVITAS 1",
+      "id": "2",
+      "name_event": "BEDAA",
       "date_event": "17 Oktober 2024",
       "location_event": "Taman Hutan Raya, Bandung",
       "event_type": "Lingkungan",
-      "imageUrl": "https://indorelawan-production.nos.wjv-1.neo.id/uploads/gallery/2024-10-09/Activity_1728445364683_Jadi-Relawan.jpg"
+      "imageUrl": "https://indorelawan-production.nos.wjv-1.neo.id/uploads/gallery/2024-10-09/Activity_1728445364683_Jadi-Relawan.jpg",
+      "desc": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
     },
     {
-      "key": "1",
-      "name_event": "AKTIVITAS 1",
+      "id": "3",
+      "name_event": "BEDAA",
       "date_event": "17 Oktober 2024",
       "location_event": "Taman Hutan Raya, Bandung",
       "event_type": "Lingkungan",
-      "imageUrl": "https://indorelawan-production.nos.wjv-1.neo.id/uploads/gallery/2024-10-09/Activity_1728445364683_Jadi-Relawan.jpg"
+      "imageUrl": "https://indorelawan-production.nos.wjv-1.neo.id/uploads/gallery/2024-10-09/Activity_1728445364683_Jadi-Relawan.jpg",
+      "desc": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
     },
     {
-      "key": "1",
-      "name_event": "AKTIVITAS 1",
+      "id": "4",
+      "name_event": "BEDAA",
       "date_event": "17 Oktober 2024",
       "location_event": "Taman Hutan Raya, Bandung",
       "event_type": "Lingkungan",
-      "imageUrl": "https://indorelawan-production.nos.wjv-1.neo.id/uploads/gallery/2024-10-09/Activity_1728445364683_Jadi-Relawan.jpg"
+      "imageUrl": "https://indorelawan-production.nos.wjv-1.neo.id/uploads/gallery/2024-10-09/Activity_1728445364683_Jadi-Relawan.jpg",
+      "desc": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+    },
+    {
+      "id": "5",
+      "name_event": "BEDAA",
+      "date_event": "17 Oktober 2024",
+      "location_event": "Taman Hutan Raya, Bandung",
+      "event_type": "Lingkungan",
+      "imageUrl": "https://indorelawan-production.nos.wjv-1.neo.id/uploads/gallery/2024-10-09/Activity_1728445364683_Jadi-Relawan.jpg",
+      "desc": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+    },
+    {
+      "id": "6",
+      "name_event": "BEDAA",
+      "date_event": "17 Oktober 2024",
+      "location_event": "Taman Hutan Raya, Bandung",
+      "event_type": "Lingkungan",
+      "imageUrl": "https://indorelawan-production.nos.wjv-1.neo.id/uploads/gallery/2024-10-09/Activity_1728445364683_Jadi-Relawan.jpg",
+      "desc": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+    },
+    {
+      "id": "7",
+      "name_event": "BEDAA",
+      "date_event": "17 Oktober 2024",
+      "location_event": "Taman Hutan Raya, Bandung",
+      "event_type": "Lingkungan",
+      "imageUrl": "https://indorelawan-production.nos.wjv-1.neo.id/uploads/gallery/2024-10-09/Activity_1728445364683_Jadi-Relawan.jpg",
+      "desc": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+    },
+    {
+      "id": "8",
+      "name_event": "BEDAA",
+      "date_event": "17 Oktober 2024",
+      "location_event": "Taman Hutan Raya, Bandung",
+      "event_type": "Lingkungan",
+      "imageUrl": "https://indorelawan-production.nos.wjv-1.neo.id/uploads/gallery/2024-10-09/Activity_1728445364683_Jadi-Relawan.jpg",
+      "desc": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+    },
+    {
+      "id": "9",
+      "name_event": "BEDAA",
+      "date_event": "17 Oktober 2024",
+      "location_event": "Taman Hutan Raya, Bandung",
+      "event_type": "Lingkungan",
+      "imageUrl": "https://indorelawan-production.nos.wjv-1.neo.id/uploads/gallery/2024-10-09/Activity_1728445364683_Jadi-Relawan.jpg",
+      "desc": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+    },
+    {
+      "id": "10",
+      "name_event": "BEDAA",
+      "date_event": "17 Oktober 2024",
+      "location_event": "Taman Hutan Raya, Bandung",
+      "event_type": "Lingkungan",
+      "imageUrl": "https://indorelawan-production.nos.wjv-1.neo.id/uploads/gallery/2024-10-09/Activity_1728445364683_Jadi-Relawan.jpg",
+      "desc": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+    },
+    {
+      "id": "11",
+      "name_event": "BEDAA",
+      "date_event": "17 Oktober 2024",
+      "location_event": "Taman Hutan Raya, Bandung",
+      "event_type": "Lingkungan",
+      "imageUrl": "https://indorelawan-production.nos.wjv-1.neo.id/uploads/gallery/2024-10-09/Activity_1728445364683_Jadi-Relawan.jpg",
+      "desc": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+    },
+    {
+      "id": "12",
+      "name_event": "BEDAA",
+      "date_event": "17 Oktober 2024",
+      "location_event": "Taman Hutan Raya, Bandung",
+      "event_type": "Lingkungan",
+      "imageUrl": "https://indorelawan-production.nos.wjv-1.neo.id/uploads/gallery/2024-10-09/Activity_1728445364683_Jadi-Relawan.jpg",
+      "desc": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+    }
+  ],
+  "detailCard": [
+    {
+      "id": "1",
+      "volunteerTotal": "24",
+      "volunteerTask": "Membersihkan sampah",
+      "volunteerTools": "Masker Medis, Sarung tangan",
+      "moreInformation": "Relawan harus dalam keadaan sehat dnbawid aiwnd wadhawio hdawibfi Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est lab"
     }
   ]
 }
