@@ -20,7 +20,7 @@ export const ActivityCard = (props) => {
   }, []);
 
   return (
-    <div className="w-full max-w-xs sm:max-w-sm md:max-w-md lg:max-w-lg rounded-lg overflow-hidden shadow-lg bg-white ">
+    <div className="flex-1 rounded-lg overflow-hidden shadow-lg bg-white">
       {/* Image Section */}
       <img
         src={imageUrl}

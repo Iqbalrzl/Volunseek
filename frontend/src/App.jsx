@@ -6,6 +6,7 @@ import { AboutUs } from "./pages/AboutUs";
 import { DetailPage } from "./pages/DetailPage";
 import { Header } from "./components/Header";
 import { Footer } from "./components/Footer";
+import { MoreEvent } from "./pages/MoreEvent";
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/aboutus" element={<AboutUs />} />
         <Route path="/detail-activity/:activityId" element={<DetailPage />} />
+        <Route path="/more-event" element={<MoreEvent />} />
       </Routes>
       <Footer />
     </>

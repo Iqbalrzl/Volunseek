@@ -1,52 +1,43 @@
+import { Link } from "react-router-dom";
 import aboutImg from "@/assets/images/aboutImg.png";
 
 export const AboutUs = () => {
   return (
     <div className="min-h-fit">
-      <div className=" relative bg-[#D1F2EB] rounded-b-full ">
+      <div className="relative bg-[#D1F2EB] sm:rounded-b-full">
         <div className="mx-auto mt-12 px-4 py-20 sm:px-6 lg:px-5">
-          <div className="text-center">
-            <h2 className="text-3xl font-bold sm:text-4xl text-slate-800">
-              Kenali VolunSeek Lebih Dekat
-            </h2>
-          </div>
-          {/* <div className="mt-10">
-            <img src={aboutImg} alt="" className="mx-auto max-w-full h-auto" />
-          </div> */}
+          <h2 className="text-3xl font-bold sm:text-4xl text-slate-800 text-center">
+            Kenali VolunSeek Lebih Dekat
+          </h2>
         </div>
       </div>
-      <main className="min-h-[70vh] max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="flex justify-center flex-col md:flex-row md:items-center md:gap-8">
           <div className="md:w-1/2">
-            {" "}
-            {/* Sesuaikan lebar di layar sedang */}
             <img
               src={aboutImg}
               alt=""
-              className="mx-auto max-w-full h-auto mb-6 md:mb-0"
+              className="mx-auto max-w-full h-auto mb-6 md:mb-0 rounded-md shadow-lg"
             />
           </div>
           <div className="md:w-1/2">
-            {" "}
-            {/* Sesuaikan lebar di layar sedang */}
-            <p className="text-lg text-gray-700">
-              Lorem ipsum, dolor sit amet consectetur adipisicing elit. Iste,
-              perferendis! Magnam quasi rem quae cupiditate quis illo,
-              reprehenderit blanditiis obcaecati repellat, nihil fuga adipisci
-              perferendis voluptate fugiat eius suscipit nesciunt officiis
-              possimus? Expedita quos necessitatibus eveniet optio officia,
-              dignissimos nemo veritatis obcaecati quia voluptas culpa vitae
-              sunt repudiandae. Quia nemo aspernatur exercitationem, adipisci ea
-              quod saepe ipsam commodi fuga, omnis ut quaerat debitis! Sequi
-              porro nobis voluptatibus saepe rem! Sapiente modi ipsa nihil enim
-              perferendis quia nam impedit incidunt voluptates ratione sequi
-              officiis commodi beatae totam facere quos praesentium reiciendis
-              illo, iure alias repellendus! Aliquid aspernatur tempore nihil
-              ullam autem. Lorem ipsum dolor sit amet consectetur adipisicing
-              elit. Recusandae laboriosam, sint consequatur vero repellat ipsam
-              nulla eius aut accusantium beatae deleniti dolor blanditiis ex
-              quibusdam molestias voluptas vel itaque consectetur.
+            <h3 className="text-2xl font-bold mb-4 text-slate-800">
+              Tentang VolunSeek
+            </h3>
+            <p className="text-lg text-gray-700 leading-relaxed">
+              VolunSeek adalah platform yang menghubungkan relawan dengan
+              peluang bermakna untuk melayani komunitas lokal mereka. Misi kami
+              adalah untuk membuat orang-orang dapat dengan mudah menemukan dan
+              terlibat dalam sebab-sebab yang mereka pedulikan.
             </p>
+            <div className="mt-6">
+              <Link
+                to="/volunteer"
+                className="bg-primary text-white px-6 py-3 rounded-md hover:bg-primaryDark inline-block"
+              >
+                Bergabung Sekarang
+              </Link>
+            </div>
           </div>
         </div>
       </main>

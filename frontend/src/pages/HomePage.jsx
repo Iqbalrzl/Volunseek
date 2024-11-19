@@ -10,7 +10,7 @@ export const HomePage = () => {
   const [cards, setCards] = useState([]);
   const [loadingCards, setloadingCards] = useState(true);
 
-  const CARDS_LIMIT = 12;
+  const CARDS_LIMIT = 8;
 
   const limitedCards = cards.slice(0, CARDS_LIMIT);
 
@@ -80,13 +80,13 @@ export const HomePage = () => {
           </div>
         ) : (
           <>
-            <div className="grid justify-start sm:justify-center grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mb-8">
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mb-8">
               {cardsActivity}
             </div>
 
             {cards.length >= CARDS_LIMIT && (
               <div className="flex justify-center mt-8 mb-12">
-                <Link to={"/"}>
+                <Link to={"/more-event"}>
                   <Button
                     variant="outline"
                     size="lg"

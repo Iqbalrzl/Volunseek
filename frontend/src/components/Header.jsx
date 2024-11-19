@@ -5,7 +5,7 @@ import { WebTitle } from "./WebTitle";
 export const Header = () => {
   const navbarItems = [
     { label: "Tentang Kami", path: "/aboutus" }, // Updated path
-    { label: "Cari Aktivitas", path: "/" },
+    { label: "Cari Aktivitas", path: "/more-event" },
   ];
 
   return (
