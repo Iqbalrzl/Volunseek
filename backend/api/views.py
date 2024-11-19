@@ -10,7 +10,9 @@ from .serializers import *
 
 @api_view()
 def event_list(request):
-    return Response('testing')
+    event = Event.objects.select_related('event_type').all()
+    serializer = EventSerializer(event, many=True)
+    return Response(serializer.data)
 
 
 @api_view()
