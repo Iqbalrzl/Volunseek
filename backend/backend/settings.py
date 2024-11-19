@@ -84,7 +84,7 @@ DATABASES = {
         'NAME': 'Volunseek',
         'HOST': 'localhost',
         'USER': 'root',
-        'PASSWORD': '03092002'
+        'PASSWORD': 'Inirheno5*'
     }
 }
 
@@ -131,7 +131,7 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 CORS_ALLOWED_ORIGINS = [
-    "https://example.com",
+    "http://localhost:5173",
 ]
 
 REST_FRAMEWORK = {

@@ -10,15 +10,16 @@ export const DetailPage = () => {
   const [detail, setDetail] = useState({
     id: 0,
     name_event: "",
-    date_event: "",
+    start_event: "",
+    end_event: "",
     location_event: "",
     event_type: "",
-    imageUrl: " ",
+    imageUrl: "",
   });
 
-  const fetchActivity = async () => {
+  const fetchActivity = async (eventId) => {
     try {
-      const res = await axiosInstance.get("/cards/" + params.activityId);
+      const res = await axiosInstance.get(`/api/events/${eventId}/`);
       setDetail(res.data);
     } catch (err) {
       console.log(err);
@@ -26,8 +27,8 @@ export const DetailPage = () => {
   };
 
   useEffect(() => {
-    fetchActivity();
-  }, []);
+    fetchActivity(params.eventId);
+  }, [params.eventId]);
 
   return (
     <>

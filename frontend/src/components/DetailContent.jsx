@@ -1,9 +1,9 @@
 import { axiosInstance } from "@/lib/axios";
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+// import { useParams } from "react-router-dom";
 
 export const DetailContent = () => {
-  const params = useParams();
+  // const params = useParams();
   const [moreDetail, setMoreDetail] = useState({
     id: 0,
     volunteerTotal: 0,
@@ -14,9 +14,7 @@ export const DetailContent = () => {
 
   const fetchDetail = async () => {
     try {
-      const resDetail = await axiosInstance.get(
-        "/detailCard/" + params.activityId
-      );
+      const resDetail = await axiosInstance.get("/api/events/?format=json");
       setMoreDetail(resDetail.data);
     } catch (err) {
       console.log(err);
@@ -31,7 +29,7 @@ export const DetailContent = () => {
     <div className="flex flex-wrap gap-y-6 sm:gap-y-8">
       {/* Bagian Kiri */}
       <div className="w-full sm:w-1/2 lg:w-1/4">
-        <p>Nama Pekerjaan</p>
+        <p>Total Relawan</p>
       </div>
 
       {/* Bagian Kanan */}

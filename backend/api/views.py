@@ -24,3 +24,5 @@ def event_detail(request, pk):
 
 def index(request):
     return HttpResponse("test")
+
+

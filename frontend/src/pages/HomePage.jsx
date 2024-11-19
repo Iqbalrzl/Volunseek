@@ -22,7 +22,8 @@ export const HomePage = () => {
         imageUrl={card.imageUrl}
         name_event={card.name_event}
         event_type={card.event_type}
-        date_event={card.date_event}
+        start_event={card.start_event}
+        end_event={card.end_event}
         location_event={card.location_event}
       />
     );
@@ -31,7 +32,7 @@ export const HomePage = () => {
   const fetchActivity = async () => {
     setloadingCards(true);
     try {
-      const res = await axiosInstance.get("/cards");
+      const res = await axiosInstance.get("/api/events/?format=json");
       console.log(res.data);
       setCards(res.data);
     } catch (err) {
