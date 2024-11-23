@@ -40,7 +40,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     "corsheaders",
     'rest_framework',
-    'api'
+    'api',
+    'users',
 ]
 
 MIDDLEWARE = [
@@ -84,7 +85,7 @@ DATABASES = {
         'NAME': 'Volunseek',
         'HOST': 'localhost',
         'USER': 'root',
-        'PASSWORD': 'Inirheno5*'
+        'PASSWORD':
     }
 }
 
