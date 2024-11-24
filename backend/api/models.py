@@ -1,6 +1,7 @@
 from django.db import models
+from django.conf import settings
 from django.core.exceptions import ValidationError
-from django.contrib.auth.base_user import AbstractBaseUser, BaseUserManager
+from django.core.validators import MinValueValidator
 
 # Create your models here.
 
@@ -45,17 +46,20 @@ class EventDetail(models.Model):
 
 
 class Participant(models.Model):
-    username = models.CharField(max_length=255)
-    password = models.CharField(max_length=8)
-    email = models.EmailField(unique=True)
+    user = models.OneToOneField(
+        settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='user')
+    birth_date = models.DateField(blank=True, null=True)
+    address = models.CharField(max_length=255, blank=True, null=True)
 
     def __str__(self):
-        return self.username
+        return self.user.username
 
 
 class Enrollment(models.Model):
-    participant = models.ForeignKey(Participant, on_delete=models.CASCADE)
-    event = models.ForeignKey(Event, on_delete=models.CASCADE)
+    participant = models.ForeignKey(
+        Participant, on_delete=models.PROTECT, related_name='participant')
+    event = models.ForeignKey(
+        Event, on_delete=models.PROTECT, related_name='event')
     enrollment_date = models.DateField(auto_now_add=True)
 
     def clean(self):

@@ -16,7 +16,7 @@ class EventDetailInLine(admin.StackedInline):
 @admin.register(Event)
 class EventAdmin(admin.ModelAdmin):
     autocomplete_fields = ['event_type']
-    list_display = ['title', 'event_type', 'description',
+    list_display = ['title', 'event_type', 'description', 'max_participants',
                     'start_date', 'end_date', 'location', 'status', 'detail']
     list_select_related = ['event_type']
     list_filter = ['event_type']
@@ -42,8 +42,11 @@ class EventAdmin(admin.ModelAdmin):
 
 @admin.register(EventDetail)
 class EventDetailAdmin(admin.ModelAdmin):
-    list_display = ['event', 'task', 'tools', 'information', 'event_']
+    list_display = ['event_title', 'task', 'tools', 'information', 'event_']
     list_select_related = ['event']
+
+    def event_title(self, event_detail):
+        return event_detail.event
 
     def event_(self, event_detail):
         url = (
@@ -72,14 +75,15 @@ class EventTypeAdmin(admin.ModelAdmin):
 
 @admin.register(Participant)
 class ParticipantAdmin(admin.ModelAdmin):
-    list_display = ['username', 'email']
-    search_fields = ['username__istartswith']
+    list_display = ['user', 'birth_date', 'address']
+    list_select_related = ['user']
+    search_fields = ['user__username']
 
 
 @admin.register(Enrollment)
 class EnrollmentAdmin(admin.ModelAdmin):
     autocomplete_fields = ['event', 'participant']
-    list_display = ['id', 'event_', 'participant_', 'enrollment_date']
+    list_display = ['id', 'event_', 'enrollment_date']
     list_select_related = ['participant', 'event']
     list_filter = ['event']
 
@@ -92,11 +96,11 @@ class EnrollmentAdmin(admin.ModelAdmin):
             }))
         return format_html('<a href="{}">{}</a>', url, enrollment.event.title)
 
-    def participant_(self, enrollment):
-        url = (
-            reverse('admin:api_participant_changelist')
-            + '?'
-            + urlencode({
-                'id': str(enrollment.participant.id)
-            }))
-        return format_html('<a href="{}">{}</a>', url, enrollment.participant.username)
+    # def participant_(self, enrollment):
+    #     url = (
+    #         reverse('admin:api_participant_changelist')
+    #         + '?'
+    #         + urlencode({
+    #             'id': str(enrollment.participant.id)
+    #         }))
+    #     return format_html('<a href="{}">{}</a>', url, enrollment.participant.username)

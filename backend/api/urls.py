@@ -1,8 +1,26 @@
-from django.urls import path
-from .views import index, event_list, event_detail
+from django.urls import path, include
+from rest_framework.routers import DefaultRouter, SimpleRouter
+from rest_framework_nested import routers
+from .views import *
+from pprint import pprint
+
+router = DefaultRouter()
+router.register('participant', ParticipantViewSet)
+router.register('event', EventViewSet)
+router.register('detail', EventDetailViewSet)
+
+event_router = routers.NestedSimpleRouter(router, 'event', lookup='event')
+event_router.register('detail', NestedEventDetailViewSet,
+                      basename='event-detail')
 
 urlpatterns = [
-    path('events/', event_list, name='api_events'),
-    path('events/<int:pk>/', event_detail, name='api_events_detail'),
-    path('', index, name='api_index')
+    path('', include(router.urls)),
+    path('', include(event_router.urls)),
+    path('events/',
+         EventList.as_view(), name='api-events'),
+    path('events/<int:pk>/', EventDetails.as_view(), name='api-events_detail'),
+    path('event_types/', EventTypeList.as_view(), name='api-event_type'),
+    path('event_types/<int:pk>/', EventTypeDetail.as_view(),
+         name='api-event_type-detail'),
+    path('enrollments/', EnrollmentList.as_view())
 ]
