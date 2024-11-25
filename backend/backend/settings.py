@@ -87,7 +87,7 @@ DATABASES = {
         'NAME': 'Volunseek',
         'HOST': 'localhost',
         'USER': 'root',
-        'PASSWORD': ''
+        'PASSWORD': 'Inirheno5*'
     }
 }
 

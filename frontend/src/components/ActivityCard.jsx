@@ -1,7 +1,17 @@
 import { Button } from "./ui/button";
 import { axiosInstance } from "@/lib/axios";
+import { CalendarDays, MapPin } from "lucide-react";
 import { useEffect } from "react";
 import { Link } from "react-router-dom";
+
+const formatDate = (dateString) => {
+  const date = new Date(dateString);
+  return new Intl.DateTimeFormat("id-ID", {
+    day: "2-digit",
+    month: "short",
+    year: "numeric",
+  }).format(date);
+};
 
 export const ActivityCard = (props) => {
   const {
@@ -16,7 +26,7 @@ export const ActivityCard = (props) => {
 
   const loadActivity = async () => {
     try {
-      await axiosInstance.get("/api/events/?format=json");
+      await axiosInstance.get("api/events/");
     } catch (err) {
       console.log(err);
     }
@@ -47,12 +57,21 @@ export const ActivityCard = (props) => {
         {/* Title */}
         <h3 className="text-lg font-semibold mb-2">{name_event}</h3>
 
-        {/* Date Range */}
-        <p className="text-sm text-gray-600 mb-1">{start_event}</p>
-        <p className="text-sm text-gray-600 mb-1">{end_event}</p>
+        <div className="flex flex-col mb-4 gap-2">
+          <div className="flex gap-2 text-[10px] items-center ">
+            <CalendarDays className="w-5 h-5" />
+            <p className=" text-gray-600 ">{formatDate(start_event)}</p>
+            <span className="text-muted-foreground font-">-</span>
+            <p className=" text-gray-600 ">{formatDate(end_event)}</p>
+          </div>
 
-        {/* Location */}
-        <p className="text-sm text-gray-600 mb-4">{location_event}</p>
+          {/* Location */}
+          <div className="flex gap-2 text-[10px]">
+            <MapPin className="w-5 h-5 items-start flex" />
+            <p className=" text-gray-600  items-center">{location_event}</p>
+          </div>
+        </div>
+        {/* Date Range */}
 
         {/* Button */}
         <Link to={"/detail-activity/" + id}>

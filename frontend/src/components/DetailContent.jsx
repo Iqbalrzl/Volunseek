@@ -1,20 +1,27 @@
 import { axiosInstance } from "@/lib/axios";
 import { useEffect, useState } from "react";
-// import { useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 
 export const DetailContent = () => {
-  // const params = useParams();
+  const params = useParams();
   const [moreDetail, setMoreDetail] = useState({
-    id: 0,
-    volunteerTotal: 0,
-    volunteerTask: "",
-    volunteerTools: "",
-    moreInformation: "",
+    event_id: 0,
+    event: {
+      id: 0,
+      name_event: "",
+      start_event: "",
+      end_event: "",
+      location_event: "",
+      imageURL: "",
+    },
+    task: "",
+    tools: "",
+    information: "",
   });
 
-  const fetchDetail = async () => {
+  const fetchDetail = async (eventId) => {
     try {
-      const resDetail = await axiosInstance.get("/api/events/?format=json");
+      const resDetail = await axiosInstance.get(`/api/detail/${eventId}/`);
       setMoreDetail(resDetail.data);
     } catch (err) {
       console.log(err);
@@ -22,8 +29,8 @@ export const DetailContent = () => {
   };
 
   useEffect(() => {
-    fetchDetail();
-  }, []);
+    fetchDetail(params.eventId);
+  }, [params.eventId]);
 
   return (
     <div className="flex flex-wrap gap-y-6 sm:gap-y-8">
@@ -34,42 +41,34 @@ export const DetailContent = () => {
 
       {/* Bagian Kanan */}
       <div className="w-full sm:w-1/2 lg:w-3/4">
-        <span className="text-muted-foreground">
-          {moreDetail.volunteerTotal}
-        </span>
+        <span className="text-muted-foreground">{moreDetail.total}</span>
       </div>
 
       {/* Baris 2 */}
-      <div className="w-full sm:w-1/2 lg:w-1/4">
+      <div className="w-full sm:w-1/2 lg:w-1/4 ">
         <p>Tugas Relawan</p>
       </div>
 
       <div className="w-full sm:w-1/2 lg:w-3/4">
-        <span className="text-muted-foreground">
-          {moreDetail.volunteerTask}
-        </span>
+        <span className="text-muted-foreground">{moreDetail.task}</span>
       </div>
 
       {/* Baris 3 */}
-      <div className="w-full sm:w-1/2 lg:w-1/4">
+      <div className="w-full sm:w-1/2 lg:w-1/4 ">
         <p>Perlengkapan Relawan</p>
       </div>
 
       <div className="w-full sm:w-1/2 lg:w-3/4">
-        <span className="text-muted-foreground">
-          {moreDetail.volunteerTools}
-        </span>
+        <span className="text-muted-foreground">{moreDetail.tools}</span>
       </div>
 
       {/* Baris 4 */}
-      <div className="w-full sm:w-1/2 lg:w-1/4">
+      <div className="w-full sm:w-1/2 lg:w-1/4 ">
         <p>Informasi Tambahan</p>
       </div>
 
       <div className="w-full sm:w-1/2 lg:w-3/4">
-        <span className="text-muted-foreground">
-          {moreDetail.moreInformation}
-        </span>
+        <span className="text-muted-foreground">{moreDetail.information}</span>
       </div>
     </div>
   );

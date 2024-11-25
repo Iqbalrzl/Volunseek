@@ -1,7 +1,6 @@
 import { axiosInstance } from "@/lib/axios";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-
 import { DetailContent } from "@/components/DetailContent";
 import { Card, CardTitle } from "@/components/ui/card";
 
@@ -16,6 +15,16 @@ export const DetailPage = () => {
     event_type: "",
     imageUrl: "",
   });
+  const formatDate = (dateString) => {
+    if (!dateString) return "Tanggal tidak tersedia"; // Fallback jika kosong
+    const date = new Date(dateString);
+    if (isNaN(date)) return "Tanggal tidak valid"; // Fallback jika tidak valid
+    return new Intl.DateTimeFormat("id-ID", {
+      day: "2-digit",
+      month: "long",
+      year: "numeric",
+    }).format(date);
+  };
 
   const fetchActivity = async (eventId) => {
     try {
@@ -35,7 +44,6 @@ export const DetailPage = () => {
       <main className="min-h-screen p-10 mt-8 bg-[#D1F2EB]">
         <Card className="flex w-full">
           <div className="flex flex-col sm:flex-row px-8 py-8 w-full gap-8">
-            {/* Gambar berada di bagian atas untuk small devices */}
             <div className="flex-shrink-0 sm:w-1/3">
               <img
                 src={detail.imageUrl}
@@ -44,7 +52,6 @@ export const DetailPage = () => {
               />
             </div>
 
-            {/* Konten teks */}
             <div className="flex flex-col w-full gap-2">
               <CardTitle className="mb-4">{detail.name_event}</CardTitle>
               <p className="text-muted-foreground">
@@ -54,7 +61,8 @@ export const DetailPage = () => {
                 Lokasi: {detail.location_event}
               </p>
               <p className="text-muted-foreground">
-                Jadwal Kegiatan: {detail.date_event}
+                Jadwal Kegiatan: {formatDate(detail.start_event)} -{" "}
+                {formatDate(detail.end_event)}
               </p>
               <p className="text-muted-foreground">{detail.desc}</p>
             </div>
