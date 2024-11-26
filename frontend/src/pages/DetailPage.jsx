@@ -16,9 +16,9 @@ export const DetailPage = () => {
     imageUrl: "",
   });
   const formatDate = (dateString) => {
-    if (!dateString) return "Tanggal tidak tersedia"; // Fallback jika kosong
+    if (!dateString) return "Tanggal tidak tersedia";
     const date = new Date(dateString);
-    if (isNaN(date)) return "Tanggal tidak valid"; // Fallback jika tidak valid
+    if (isNaN(date)) return "Tanggal tidak valid";
     return new Intl.DateTimeFormat("id-ID", {
       day: "2-digit",
       month: "long",
