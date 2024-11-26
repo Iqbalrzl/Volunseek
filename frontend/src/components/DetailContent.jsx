@@ -67,8 +67,10 @@ export const DetailContent = () => {
         <p>Informasi Tambahan</p>
       </div>
 
-      <div className="w-full sm:w-1/2 lg:w-3/4">
-        <span className="text-muted-foreground">{moreDetail.information}</span>
+      <div className="w-full sm:w-1/2 lg:w-3/4 ">
+        <span className="text-muted-foreground whitespace-pre-wrap">
+          {moreDetail.information}
+        </span>
       </div>
     </div>
   );

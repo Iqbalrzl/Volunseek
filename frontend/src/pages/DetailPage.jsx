@@ -64,7 +64,7 @@ export const DetailPage = () => {
                 Jadwal Kegiatan: {formatDate(detail.start_event)} -{" "}
                 {formatDate(detail.end_event)}
               </p>
-              <p className="text-muted-foreground">{detail.desc}</p>
+              <p className="text-muted-foreground ">{detail.desc}</p>
             </div>
           </div>
         </Card>

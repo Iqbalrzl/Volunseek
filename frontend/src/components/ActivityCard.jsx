@@ -58,7 +58,7 @@ export const ActivityCard = (props) => {
         <h3 className="text-lg font-semibold mb-2">{name_event}</h3>
 
         <div className="flex flex-col mb-4 gap-2">
-          <div className="flex gap-2 text-[10px] items-center ">
+          <div className="flex gap-2 text-[11px] items-center ">
             <CalendarDays className="w-5 h-5" />
             <p className=" text-gray-600 ">{formatDate(start_event)}</p>
             <span className="text-muted-foreground font-">-</span>
@@ -66,7 +66,7 @@ export const ActivityCard = (props) => {
           </div>
 
           {/* Location */}
-          <div className="flex gap-2 text-[10px]">
+          <div className="flex gap-2 text-[11px] items-center">
             <MapPin className="w-5 h-5 items-start flex" />
             <p className=" text-gray-600  items-center">{location_event}</p>
           </div>
