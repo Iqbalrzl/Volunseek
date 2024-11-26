@@ -13,7 +13,7 @@ class EventSerializer(serializers.ModelSerializer):
     class Meta:
         model = Event
         fields = ['id', 'name_event', 'start_event', 'end_event',
-                  'location_event', 'event_type', 'imageURL', 'desc', 'status']
+                  'location_event', 'event_type', 'imageURL', 'desc', 'max_participants', 'status']
 
     name_event = serializers.CharField(max_length=255, source='title')
     start_event = serializers.DateField(source='start_date')
