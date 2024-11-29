@@ -184,10 +184,10 @@ class ParticipantViewSet(ListModelMixin, CreateModelMixin, RetrieveModelMixin, U
         (participant, created) = Participant.objects.get_or_create(
             user_id=request.user.id)
         if request.method == 'GET':
-            serializer = ParticipantSerializer(participant)
+            serializer = ParticipantMeSerializer(participant)
             return Response(serializer.data)
         elif request.method == 'PUT':
-            serializer = ParticipantSerializer(
+            serializer = ParticipantMeSerializer(
                 participant, data=request.data)
             serializer.is_valid(raise_exception=True)
             serializer.save()

@@ -65,6 +65,23 @@ class ParticipantSerializer(serializers.ModelSerializer):
     user = serializers.StringRelatedField(read_only=True)
 
 
+class EnrollmentMeSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Enrollment
+        fields = ['event']
+
+    event = EventSerializer(read_only=True)
+
+
+class ParticipantMeSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Participant
+        fields = ['birth_date', 'address', 'enrollment']
+
+    enrollment = EnrollmentMeSerializer(
+        many=True, read_only=True, source='participant')
+
+
 class EnrollmentSerializer(serializers. ModelSerializer):
     class Meta:
         model = Enrollment
