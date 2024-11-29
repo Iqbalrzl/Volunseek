@@ -8,6 +8,7 @@ import { Header } from "./components/Header";
 import { Footer } from "./components/Footer";
 import { MoreEvent } from "./pages/MoreEvent";
 import { UserProfilePage } from "./pages/UserProfilePage";
+import { NotFoundPage } from "./pages/NotFoundPage";
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
         <Route path="/detail-activity/:eventId" element={<DetailPage />} />
         <Route path="/more-event" element={<MoreEvent />} />
         <Route path="/user-profile" element={<UserProfilePage />} />
+        <Route path="*" element={<NotFoundPage />} />
       </Routes>
       <Footer />
     </>

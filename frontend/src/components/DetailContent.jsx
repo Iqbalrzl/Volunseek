@@ -56,7 +56,9 @@ export const DetailContent = () => {
       </div>
 
       <div className="w-full sm:w-1/2 lg:w-3/4">
-        <span className="text-muted-foreground">{moreDetail.task}</span>
+        <span className="text-muted-foreground whitespace-pre-wrap">
+          {moreDetail.task}
+        </span>
       </div>
 
       {/* Baris 3 */}
