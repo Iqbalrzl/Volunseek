@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { DetailContent } from "@/components/DetailContent";
 import { Card, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
 
 export const DetailPage = () => {
   const params = useParams();
@@ -15,6 +16,7 @@ export const DetailPage = () => {
     event_type: "",
     imageUrl: "",
   });
+
   const formatDate = (dateString) => {
     if (!dateString) return "Tanggal tidak tersedia";
     const date = new Date(dateString);
@@ -64,7 +66,13 @@ export const DetailPage = () => {
                 Jadwal Kegiatan: {formatDate(detail.start_event)} -{" "}
                 {formatDate(detail.end_event)}
               </p>
-              <p className="text-muted-foreground ">{detail.desc}</p>
+              <p> {detail.desc}</p>
+
+              <div className="flex flex-col mt-2">
+                <Button className="bg-[#1ABC9C] text-white hover:bg-[#1ABC9C] hover:opacity-60 w-1/2">
+                  Jadi Relawan
+                </Button>
+              </div>
             </div>
           </div>
         </Card>

@@ -5,18 +5,13 @@ import { useParams } from "react-router-dom";
 export const DetailContent = () => {
   const params = useParams();
   const [moreDetail, setMoreDetail] = useState({
-    event_id: 0,
-    event: {
-      id: 0,
-      name_event: "",
-      start_event: "",
-      end_event: "",
-      location_event: "",
-      imageURL: "",
-    },
     task: "",
     tools: "",
     information: "",
+  });
+
+  const [detailParticipants, setDetailParticipants] = useState({
+    max_participants: "",
   });
 
   const fetchDetail = async (eventId) => {
@@ -27,9 +22,18 @@ export const DetailContent = () => {
       console.log(err);
     }
   };
+  const fetchDetail2 = async (eventId) => {
+    try {
+      const resDetail1 = await axiosInstance.get(`/api/event/${eventId}/`);
+      setDetailParticipants(resDetail1.data);
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   useEffect(() => {
     fetchDetail(params.eventId);
+    fetchDetail2(params.eventId);
   }, [params.eventId]);
 
   return (
@@ -41,7 +45,9 @@ export const DetailContent = () => {
 
       {/* Bagian Kanan */}
       <div className="w-full sm:w-1/2 lg:w-3/4">
-        <span className="text-muted-foreground">{moreDetail.total}</span>
+        <span className="text-muted-foreground">
+          {detailParticipants.max_participants}
+        </span>
       </div>
 
       {/* Baris 2 */}
