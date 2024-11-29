@@ -21,12 +21,13 @@ export const ActivityCard = (props) => {
     end_event,
     location_event,
     event_type,
-    imageUrl,
+    imageURL,
   } = props;
 
   const loadActivity = async () => {
     try {
-      await axiosInstance.get("api/events/");
+      const res = await axiosInstance.get("api/events/");
+      console.log(res.data);
     } catch (err) {
       console.log(err);
     }
@@ -40,7 +41,7 @@ export const ActivityCard = (props) => {
     <div className="flex-1 rounded-lg overflow-hidden shadow-lg bg-white">
       {/* Image Section */}
       <img
-        src={imageUrl}
+        src={imageURL}
         alt="Activity Image"
         className="w-full h-40 object-cover"
       />

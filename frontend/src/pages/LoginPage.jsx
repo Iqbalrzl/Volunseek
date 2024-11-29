@@ -4,6 +4,7 @@ import loginTitle from "@/assets/images/loginTitle.png";
 import { Input } from "@/components/ui/input";
 import { axiosInstance } from "@/lib/axios";
 import { Link, useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
 
 export const LoginPage = () => {
   const [formData, setFormData] = useState({
@@ -13,13 +14,12 @@ export const LoginPage = () => {
 
   const [message, setMessage] = useState("");
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
-
-  0;
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -27,9 +27,21 @@ export const LoginPage = () => {
       const response = await axiosInstance.post("auth/jwt/create/", formData);
       localStorage.setItem("accessToken", response.data.access);
       localStorage.setItem("refreshToken", response.data.refresh);
-      axiosInstance.defaults.headers.common[
-        "Authorization"
-      ] = `JWT ${response.data.access}`;
+      // axiosInstance.defaults.headers.common[
+      //   "Authorization"
+      // ] = `JWT ${response.data.access}`;
+
+      const userResponse = await axiosInstance.get("/auth/users/me");
+      const userData = userResponse.data;
+
+      dispatch({
+        type: "USER_LOGIN",
+        payload: {
+          id: userData.id,
+          username: userData.username,
+        },
+      });
+
       navigate("/");
     } catch (err) {
       console.log(err);
