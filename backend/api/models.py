@@ -45,6 +45,12 @@ class EventDetail(models.Model):
         return self.event.title
 
 
+class EventImage(models.Model):
+    event = models.ForeignKey(
+        Event, on_delete=models.CASCADE, related_name='image')
+    image = models.ImageField(upload_to='event/images')
+
+
 class Participant(models.Model):
     user = models.OneToOneField(
         settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='user')
