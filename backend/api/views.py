@@ -150,7 +150,7 @@ class EventImageViewSet(ModelViewSet):
         return EventImage.objects.filter(event_id=self.kwargs['event_pk'])
 
     def get_serializer_context(self):
-        return {'event_id': self.kwargs['event_pk']}
+        return {'event_id': self.kwargs['event_pk'], 'request': self.request}
 
 
 class EnrollmentList(APIView):

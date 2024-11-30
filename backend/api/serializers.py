@@ -14,9 +14,17 @@ class EventImageSerializer(serializers.ModelSerializer):
         model = EventImage
         fields = ['id', 'image']
 
+    image = serializers.SerializerMethodField(method_name='get_image')
+
     def create(self, validated_data):
         event_id = self.kwargs['event_pk']
         return EventImage.objects.create(event_id=event_id, **validated_data)
+
+    def get_image(self, image=EventImage):
+        request = self.context.get('request')
+        if request:
+            return request.build_absolute_uri(image.image.url)
+        return image.image.url
 
 
 class EventSerializer(serializers.ModelSerializer):
