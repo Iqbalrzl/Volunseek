@@ -1,5 +1,6 @@
 from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse
+from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.viewsets import GenericViewSet, ModelViewSet
 from rest_framework.decorators import api_view, action
 from rest_framework.views import APIView
@@ -8,9 +9,11 @@ from rest_framework.mixins import CreateModelMixin, RetrieveModelMixin, UpdateMo
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.permissions import IsAuthenticated, AllowAny
+from rest_framework.filters import SearchFilter, OrderingFilter
 from .models import *
 from .serializers import *
 from .permissions import *
+from .filters import *
 
 # Create your views here.
 
@@ -20,6 +23,19 @@ class EventViewSet(ModelViewSet):
         'event_type').prefetch_related('image').all()
     serializer_class = EventSerializer
     permission_classes = [IsAdminOrReadOnly]
+    filter_backends = [SearchFilter, DjangoFilterBackend, OrderingFilter]
+    filterset_class = EventFilter
+    search_fields = ['title', 'event_type__type', 'description', 'location']
+    ordering_fields = ['title', 'start_date']
+    # filterset_fields = ['event_type_id']
+
+    # def get_queryset(self):
+    #     queryset = Event.objects.select_related(
+    #         'event_type').prefetch_related('image').all()
+    #     eventtype_id = self.request.query_params.get('event_type_id')
+    #     if eventtype_id is not None:
+    #         queryset = queryset.filter(event_type_id=eventtype_id)
+    #     return queryset
 
 
 class EventList(APIView):

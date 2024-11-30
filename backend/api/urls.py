@@ -6,7 +6,7 @@ from pprint import pprint
 
 router = DefaultRouter()
 router.register('participant', ParticipantViewSet)
-router.register('event', EventViewSet)
+router.register('event', EventViewSet, basename='event')
 router.register('detail', EventDetailViewSet)
 
 event_router = routers.NestedSimpleRouter(router, 'event', lookup='event')
