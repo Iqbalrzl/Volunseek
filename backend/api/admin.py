@@ -13,6 +13,17 @@ class EventDetailInLine(admin.StackedInline):
     extra = 0
 
 
+class EventImageInLine(admin.TabularInline):
+    model = EventImage
+    readonly_fields = ['thumbnail']
+    extra = 0
+
+    def thumbnail(self, instance):
+        if instance.image.name != "":
+            return format_html(f'<img src="{instance.image.url}" class="thumbnail" />')
+        return ''
+
+
 @admin.register(Event)
 class EventAdmin(admin.ModelAdmin):
     autocomplete_fields = ['event_type']
@@ -20,7 +31,7 @@ class EventAdmin(admin.ModelAdmin):
                     'start_date', 'end_date', 'location', 'status', 'detail']
     list_select_related = ['event_type']
     list_filter = ['event_type']
-    inlines = [EventDetailInLine]
+    inlines = [EventDetailInLine, EventImageInLine]
     search_fields = ['title']
 
     def status(self, event):
@@ -38,6 +49,11 @@ class EventAdmin(admin.ModelAdmin):
                          }))
 
         return format_html('<a href="{}"> See Details</a>', url)
+
+    class Media:
+        css = {
+            'all': ['api/styles.css']
+        }
 
 
 @admin.register(EventDetail)

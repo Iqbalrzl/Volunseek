@@ -25,7 +25,6 @@ class Event(models.Model):
     location = models.CharField(max_length=255)
     event_type = models.ForeignKey(
         EventType, on_delete=models.SET_NULL, null=True, blank=True, related_name='event_type')
-    image_url = models.URLField(max_length=255, null=True, blank=True,)
 
     def __str__(self):
         return self.title

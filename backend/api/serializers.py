@@ -9,6 +9,16 @@ class EventTypeSerializer(serializers.ModelSerializer):
         fields = ['id', 'type']
 
 
+class EventImageSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = EventImage
+        fields = ['id', 'image']
+
+    def create(self, validated_data):
+        event_id = self.kwargs['event_pk']
+        return EventImage.objects.create(event_id=event_id, **validated_data)
+
+
 class EventSerializer(serializers.ModelSerializer):
     class Meta:
         model = Event
@@ -23,8 +33,7 @@ class EventSerializer(serializers.ModelSerializer):
     #  or serializers.HyperlinkedRelatedField(
     #     queryset=EventType.objects.all(),
     #     view_name='api-event_type-detail')
-    imageURL = serializers.URLField(
-        max_length=255, allow_blank=True, allow_null=True, source='image_url')
+    imageURL = EventImageSerializer(many=True, read_only=True, source='image')
     desc = serializers.CharField(
         max_length=None, allow_blank=True, allow_null=True, source='description')
     status = serializers.SerializerMethodField(

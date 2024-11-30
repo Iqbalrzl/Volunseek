@@ -12,6 +12,7 @@ router.register('detail', EventDetailViewSet)
 event_router = routers.NestedSimpleRouter(router, 'event', lookup='event')
 event_router.register('detail', NestedEventDetailViewSet,
                       basename='event-detail')
+event_router.register('image', EventImageViewSet, basename='event-image')
 
 urlpatterns = [
     path('', include(router.urls)),

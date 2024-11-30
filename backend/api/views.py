@@ -16,7 +16,8 @@ from .permissions import *
 
 
 class EventViewSet(ModelViewSet):
-    queryset = Event.objects.select_related('event_type').all()
+    queryset = Event.objects.select_related(
+        'event_type').prefetch_related('image').all()
     serializer_class = EventSerializer
     permission_classes = [IsAdminOrReadOnly]
 
@@ -136,6 +137,17 @@ class NestedEventDetailViewSet(ModelViewSet):
     def get_queryset(self):
         return EventDetail.objects.select_related(
             'event').filter(pk=self.kwargs['event_pk'])
+
+    def get_serializer_context(self):
+        return {'event_id': self.kwargs['event_pk']}
+
+
+class EventImageViewSet(ModelViewSet):
+    serializer_class = EventImageSerializer
+    # permission_classes = [IsAdminOrReadOnly]
+
+    def get_queryset(self):
+        return EventImage.objects.filter(event_id=self.kwargs['event_pk'])
 
     def get_serializer_context(self):
         return {'event_id': self.kwargs['event_pk']}
