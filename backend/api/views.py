@@ -8,7 +8,7 @@ from rest_framework.generics import ListAPIView, ListCreateAPIView, CreateAPIVie
 from rest_framework.mixins import CreateModelMixin, RetrieveModelMixin, UpdateModelMixin, ListModelMixin
 from rest_framework.response import Response
 from rest_framework import status
-from rest_framework.permissions import IsAuthenticated, AllowAny
+from rest_framework.permissions import IsAuthenticated, AllowAny, IsAuthenticatedOrReadOnly
 from rest_framework.filters import SearchFilter, OrderingFilter
 from .models import *
 from .serializers import *
@@ -25,7 +25,8 @@ class EventViewSet(ModelViewSet):
     permission_classes = [IsAdminOrReadOnly]
     filter_backends = [SearchFilter, DjangoFilterBackend, OrderingFilter]
     filterset_class = EventFilter
-    search_fields = ['title', 'event_type__type', 'description', 'location']
+    search_fields = ['^title', 'title',
+                     'event_type__type', 'description', 'location']
     ordering_fields = ['title', 'start_date']
     # filterset_fields = ['event_type_id']
 
@@ -183,7 +184,7 @@ class EnrollmentViewSet(ModelViewSet):
 
 class CreateEnrollmentViewSet(ListModelMixin, RetrieveModelMixin, CreateModelMixin, GenericViewSet):
     serializer_class = CreateEnrollmentSerializer
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticatedOrReadOnly]
 
     def get_queryset(self):
         return Enrollment.objects.select_related('event').select_related('participant').filter(event_id=self.kwargs['event_pk'])
