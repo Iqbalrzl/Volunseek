@@ -27,7 +27,7 @@ class EventImageInLine(admin.TabularInline):
 @admin.register(Event)
 class EventAdmin(admin.ModelAdmin):
     autocomplete_fields = ['event_type']
-    list_display = ['title', 'event_type', 'description', 'max_participants',
+    list_display = ['id', 'title', 'event_type', 'description', 'max_participants',
                     'start_date', 'end_date', 'location', 'status', 'detail']
     list_select_related = ['event_type']
     list_filter = ['event_type']
@@ -58,7 +58,8 @@ class EventAdmin(admin.ModelAdmin):
 
 @admin.register(EventDetail)
 class EventDetailAdmin(admin.ModelAdmin):
-    list_display = ['event_title', 'task', 'tools', 'information', 'event_']
+    list_display = ['event_id', 'event_title',
+                    'task', 'tools', 'information', 'event_']
     list_select_related = ['event']
 
     def event_title(self, event_detail):
@@ -76,7 +77,7 @@ class EventDetailAdmin(admin.ModelAdmin):
 
 @admin.register(EventType)
 class EventTypeAdmin(admin.ModelAdmin):
-    list_display = ['type', 'events']
+    list_display = ['id', 'type', 'events']
     search_fields = ['type__istartswith']
 
     def events(self, event_type):
@@ -99,7 +100,7 @@ class ParticipantAdmin(admin.ModelAdmin):
 @admin.register(Enrollment)
 class EnrollmentAdmin(admin.ModelAdmin):
     autocomplete_fields = ['event', 'participant']
-    list_display = ['id', 'event_', 'enrollment_date']
+    list_display = ['id', 'event_', 'participant', 'enrollment_date']
     list_select_related = ['participant', 'event']
     list_filter = ['event']
 

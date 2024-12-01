@@ -146,7 +146,7 @@ class EventDetailViewSet(ListModelMixin, RetrieveModelMixin, CreateModelMixin, U
     permission_classes = [IsAdminOrReadOnly]
 
 
-class NestedEventDetailViewSet(ModelViewSet):
+class NestedEventDetailViewSet(ListModelMixin, GenericViewSet):
     serializer_class = NestedEventDetailSerializer
     permission_classes = [IsAdminOrReadOnly]
 
@@ -167,6 +167,30 @@ class EventImageViewSet(ModelViewSet):
 
     def get_serializer_context(self):
         return {'event_id': self.kwargs['event_pk'], 'request': self.request}
+
+
+class EnrollmentViewSet(ModelViewSet):
+    serializer_class = EnrollmentSerializer
+    permission_classes = [IsAuthenticated]
+
+    def get_queryset(self):
+        if self.request.user.is_staff:
+            return Enrollment.objects.select_related('event').select_related('participant').all()
+        (participant_id, created) = Participant.objects.only(
+            'id').get_or_create(user_id=self.request.user.id)
+        return Enrollment.objects.filter(participant_id=participant_id)
+
+
+class CreateEnrollmentViewSet(ListModelMixin, RetrieveModelMixin, CreateModelMixin, GenericViewSet):
+    serializer_class = CreateEnrollmentSerializer
+    permission_classes = [IsAuthenticated]
+
+    def get_queryset(self):
+        return Enrollment.objects.select_related('event').select_related('participant').filter(event_id=self.kwargs['event_pk'])
+
+    def get_serializer_context(self):
+        event_id = self.kwargs['event_pk']
+        return {'event_id': event_id, 'user_id': self.request.user.id}
 
 
 class EnrollmentList(APIView):

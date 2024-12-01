@@ -106,3 +106,17 @@ class EnrollmentSerializer(serializers. ModelSerializer):
 
     event = EventSerializer(read_only=True)
     participant = ParticipantSerializer(read_only=True)
+
+
+class CreateEnrollmentSerializer(serializers.Serializer):
+    id = serializers.IntegerField(read_only=True)
+    enrollment_date = serializers.DateField(read_only=True)
+    event = EventSerializer(read_only=True)
+    participant = ParticipantSerializer(read_only=True)
+
+    def create(self, validated_data):
+        event_id = self.context['event_id']
+        print(self.context['user_id'])
+        (participant_id, created) = Participant.objects.values('id').get_or_create(
+            user_id=self.context['user_id'])
+        return Enrollment.objects.create(event_id=event_id, participant_id=participant_id['id'], **validated_data)
