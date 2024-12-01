@@ -9,8 +9,15 @@ import { Footer } from "./components/Footer";
 import { MoreEvent } from "./pages/MoreEvent";
 import { UserProfilePage } from "./pages/UserProfilePage";
 import { NotFoundPage } from "./pages/NotFoundPage";
+import { useHydration } from "./components/hooks/useHydration";
 
 function App() {
+  const { hydration } = useHydration();
+
+  if (!hydration) {
+    return <p>loading..</p>;
+  }
+
   return (
     <>
       <Header />

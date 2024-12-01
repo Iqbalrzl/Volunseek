@@ -1,3 +1,5 @@
+// LoginPage.jsx
+
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import loginTitle from "@/assets/images/loginTitle.png";
@@ -16,33 +18,44 @@ export const LoginPage = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
+  // Fungsi untuk menangani perubahan input
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
   };
 
+  // Fungsi untuk menangani submit form
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       const response = await axiosInstance.post("auth/jwt/create/", formData);
       localStorage.setItem("accessToken", response.data.access);
       localStorage.setItem("refreshToken", response.data.refresh);
-      // axiosInstance.defaults.headers.common[
-      //   "Authorization"
-      // ] = `JWT ${response.data.access}`;
 
-      const userResponse = await axiosInstance.get("/auth/users/me");
-      const userData = userResponse.data;
-
-      dispatch({
-        type: "USER_LOGIN",
-        payload: {
-          id: userData.id,
-          username: userData.username,
+      // Ambil data pengguna menggunakan JWT token
+      const userResponse = await axiosInstance.get("/auth/users/me", {
+        headers: {
+          Authorization: `JWT ${response.data.access}`,
         },
       });
 
-      navigate("/");
+      const userData = userResponse.data;
+      // Dispatch action untuk login
+      dispatch({
+        type: "USER_LOGIN",
+        payload: {
+          username: userData.username, // Pastikan data username diambil dari response API
+          id: userData.id,
+        },
+      });
+
+      // Simpan username di localStorage
+      localStorage.setItem("current_username", userData.username);
+
+      navigate("/"); // Setelah login, navigate ke home
     } catch (err) {
       console.log(err);
       setMessage("password atau username salah");

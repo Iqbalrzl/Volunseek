@@ -15,11 +15,13 @@ export const HomePage = () => {
   const limitedCards = cards.slice(0, CARDS_LIMIT);
 
   const cardsActivity = limitedCards.map((card) => {
+    const image =
+      card.imageURL && card.imageURL.length > 0 ? card.imageURL[0].image : "";
     return (
       <ActivityCard
         key={card.id}
         id={card.id}
-        imageUrl={card.imageUrl}
+        imageURL={image}
         name_event={card.name_event}
         event_type={card.event_type}
         start_event={card.start_event}
@@ -32,7 +34,7 @@ export const HomePage = () => {
   const fetchActivity = async () => {
     setloadingCards(true);
     try {
-      const res = await axiosInstance.get("/api/events/?format=json");
+      const res = await axiosInstance.get("/api/event/?format=json");
       console.log(res.data);
       setCards(res.data);
     } catch (err) {

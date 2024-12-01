@@ -1,3 +1,4 @@
+// userReducer.js
 const DEFAULT_STATE = {
   username: "",
   email: "",
@@ -6,14 +7,17 @@ const DEFAULT_STATE = {
 };
 
 export const userReducer = (state = DEFAULT_STATE, action) => {
-  if (action.type === "USER_LOGIN") {
-    const duplicateState = { ...state };
-    duplicateState.username = action.payload.username;
-    duplicateState.id = action.payload.id;
-    duplicateState.role = action.payload.role;
-    return duplicateState;
-  } else if (action.type === "USER_LOGOUT") {
-    return DEFAULT_STATE;
+  switch (action.type) {
+    case "USER_LOGIN":
+      return {
+        ...state,
+        username: action.payload.username,
+        id: action.payload.id,
+        role: action.payload.role,
+      };
+    case "USER_LOGOUT":
+      return DEFAULT_STATE;
+    default:
+      return state;
   }
-  return state;
 };

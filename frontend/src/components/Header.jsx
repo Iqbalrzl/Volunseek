@@ -11,7 +11,7 @@ export const Header = () => {
     { label: "Cari Aktivitas", path: "/more-event" },
   ];
 
-  const userSelector = useSelector((state) => state.user);
+  const user = useSelector((state) => state.user);
 
   return (
     <header className="h-14 md:w-auto border-b border-none flex items-center bg-customGray px-8 lg:px-16 gap-x-10 fixed top-0 left-0 right-0 z-50">
@@ -27,10 +27,10 @@ export const Header = () => {
       </div>
 
       <div className="flex flex-1 justify-end items-center gap-6">
-        {userSelector.id ? (
+        {user.id ? (
           <div className="flex gap-2 justify-center items-center">
             <div className="!mx-0 p-2 flex justify-center items-center">
-              <p className="text-xl font-medium">{userSelector.username}</p>
+              <p className="text-xl font-medium">{user.username}</p>
             </div>
 
             <UserRound className="h-8 w-8" />

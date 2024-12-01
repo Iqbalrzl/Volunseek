@@ -14,7 +14,7 @@ export const DetailPage = () => {
     end_event: "",
     location_event: "",
     event_type: "",
-    imageUrl: "",
+    imageURL: "",
   });
 
   const formatDate = (dateString) => {
@@ -30,8 +30,10 @@ export const DetailPage = () => {
 
   const fetchActivity = async (eventId) => {
     try {
-      const res = await axiosInstance.get(`/api/events/${eventId}/`);
-      setDetail(res.data);
+      const res = await axiosInstance.get(`/api/event/${eventId}/`);
+      const data = res.data;
+      const image = data.imageURL.length > 0 ? data.imageURL[0].image : "";
+      setDetail({ ...data, imageURL: image });
     } catch (err) {
       console.log(err);
     }
@@ -48,7 +50,7 @@ export const DetailPage = () => {
           <div className="flex flex-col sm:flex-row px-8 py-8 w-full gap-8">
             <div className="flex-shrink-0 sm:w-1/3">
               <img
-                src={detail.imageUrl}
+                src={detail.imageURL}
                 alt={detail.name_event}
                 className="object-cover w-full h-[300px] rounded-lg"
               />
