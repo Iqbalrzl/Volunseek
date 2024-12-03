@@ -3,7 +3,7 @@ import { Button } from "./ui/button";
 import { WebTitle } from "./WebTitle";
 import { useSelector } from "react-redux";
 // import { useEffect } from "react";
-import { UserRound } from "lucide-react";
+import { CircleUserRound } from "lucide-react";
 
 export const Header = () => {
   const navbarItems = [
@@ -11,7 +11,7 @@ export const Header = () => {
     { label: "Cari Aktivitas", path: "/more-event" },
   ];
 
-  const user = useSelector((state) => state.user);
+  const userSelector = useSelector((state) => state.user);
 
   return (
     <header className="h-14 md:w-auto border-b border-none flex items-center bg-customGray px-8 lg:px-16 gap-x-10 fixed top-0 left-0 right-0 z-50">
@@ -27,13 +27,14 @@ export const Header = () => {
       </div>
 
       <div className="flex flex-1 justify-end items-center gap-6">
-        {user.id ? (
+        {userSelector.id ? (
           <div className="flex gap-2 justify-center items-center">
             <div className="!mx-0 p-2 flex justify-center items-center">
-              <p className="text-xl font-medium">{user.username}</p>
+              <p className="text-base font-medium">{userSelector.username}</p>
             </div>
-
-            <UserRound className="h-8 w-8" />
+            <Link to={"/user-profile"}>
+              <CircleUserRound className="h-8 w-8" />
+            </Link>
           </div>
         ) : (
           <>

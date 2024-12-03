@@ -15,7 +15,7 @@ function App() {
   const { hydration } = useHydration();
 
   if (!hydration) {
-    return <p>loading..</p>;
+    return <></>;
   }
 
   return (

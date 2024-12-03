@@ -4,6 +4,8 @@ const DEFAULT_STATE = {
   email: "",
   id: "",
   role: "",
+  first_name: "",
+  last_name: "",
 };
 
 export const userReducer = (state = DEFAULT_STATE, action) => {
@@ -11,9 +13,18 @@ export const userReducer = (state = DEFAULT_STATE, action) => {
     case "USER_LOGIN":
       return {
         ...state,
-        username: action.payload.username,
         id: action.payload.id,
-        role: action.payload.role,
+        username: action.payload.username,
+        email: action.payload.email,
+        first_name: action.payload.first_name, // Menambahkan first_name
+        last_name: action.payload.last_name, // Menambahkan last_name
+      };
+    case "USER_UPDATE":
+      return {
+        ...state,
+        first_name: action.payload.first_name,
+        last_name: action.payload.last_name,
+        email: action.payload.email,
       };
     case "USER_LOGOUT":
       return DEFAULT_STATE;

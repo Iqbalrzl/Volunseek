@@ -42,18 +42,27 @@ export const LoginPage = () => {
         },
       });
 
+      console.log(response.data.access);
+
       const userData = userResponse.data;
       // Dispatch action untuk login
+      console.log(userData);
       dispatch({
         type: "USER_LOGIN",
         payload: {
-          username: userData.username, // Pastikan data username diambil dari response API
+          username: userData.username,
+          email: userData.email,
           id: userData.id,
+          first_name: userData.first_name,
+          last_name: userData.last_name,
         },
       });
 
       // Simpan username di localStorage
       localStorage.setItem("current_username", userData.username);
+      localStorage.setItem("current_email", userData.email);
+      localStorage.setItem("current_firstname", userData.first_name);
+      localStorage.setItem("current_lastname", userData.last_name);
 
       navigate("/"); // Setelah login, navigate ke home
     } catch (err) {

@@ -1,3 +1,4 @@
+// useHydration.js
 import axiosInstance from "@/lib/axios";
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
@@ -27,8 +28,11 @@ export const useHydration = () => {
         dispatch({
           type: "USER_LOGIN",
           payload: {
-            username: userData.username, // Ambil username dan id dari response API
+            username: userData.username,
+            email: userData.email, // Menambahkan email jika diperlukan
             id: userData.id,
+            first_name: userData.first_name, // Pastikan first_name tersedia
+            last_name: userData.last_name, // Pastikan last_name tersedia
           },
         });
       }

@@ -3,7 +3,7 @@ import aboutImg from "@/assets/images/aboutImg.png";
 
 export const AboutUs = () => {
   return (
-    <div className="min-h-fit">
+    <div className="min-h-[85vh]">
       <div className="relative bg-[#D1F2EB] sm:rounded-b-full">
         <div className="mx-auto mt-12 px-4 py-20 sm:px-6 lg:px-5">
           <h2 className="text-3xl font-bold sm:text-4xl text-slate-800 text-center">
