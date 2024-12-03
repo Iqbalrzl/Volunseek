@@ -8,72 +8,103 @@ import { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 
 export const MoreEvent = () => {
-  const [cards, setCards] = useState([]);
-  const [searchParams, setSearchParams] = useSearchParams();
-  const [eventName, setEventName] = useState("");
-  const [hasNext, setHasNext] = useState(true);
+  const [cards, setCards] = useState([]); // Menyimpan data event
+  const [searchParams, setSearchParams] = useSearchParams(); // Mengatur parameter pencarian di URL
+  const [eventName, setEventName] = useState(""); // Untuk input pencarian event
+  const [hasNext, setHasNext] = useState(false); // Apakah ada halaman berikutnya
+  const [currentPage, setCurrentPage] = useState(1); // Halaman saat ini
 
+  // Mengatur halaman selanjutnya
   const handleNextPage = () => {
-    searchParams.set("page", Number(searchParams.get("page")) + 1);
-    setSearchParams(searchParams);
-  };
-  const handlePrevPage = () => {
-    searchParams.set("page", Number(searchParams.get("page")) - 1);
-    setSearchParams(searchParams);
+    setCurrentPage((prevPage) => prevPage + 1);
   };
 
+  // Mengatur halaman sebelumnya
+  const handlePrevPage = () => {
+    if (currentPage > 1) {
+      setCurrentPage((prevPage) => prevPage - 1);
+    }
+  };
+
+  // Fungsi pencarian event
   const searchEvent = () => {
-    if (eventName) {
-      searchParams.set("search", eventName);
+    if (eventName.trim()) {
+      searchParams.set("search", eventName.trim());
       setSearchParams(searchParams);
     } else {
       searchParams.delete("search");
       setSearchParams(searchParams);
     }
+    setCurrentPage(1); // Reset ke halaman pertama saat pencarian
   };
 
+  // Mengambil data event dari API
   const fetchActivity = async () => {
     try {
-      const res = await axiosInstance.get("/cards", {
+      const response = await axiosInstance.get("api/event/", {
         params: {
-          _per_page: 16,
-          _page: Number(searchParams.get("page")),
-          name_event: searchParams.get("search"),
+          per_page: 16,
+          page: currentPage,
+          name_event: searchParams.get("search") || "",
         },
       });
 
-      setHasNext(Boolean(res.data.next));
-      setCards(res.data.data);
+      // Log untuk memeriksa struktur respons
+      console.log("API Response:", response.data);
+
+      // Sesuaikan dengan struktur respons API
+      const { events, hasNext } = response.data;
+
+      if (Array.isArray(events)) {
+        console.log("Setting cards state with events:", events);
+        setCards(events);
+        setHasNext(Boolean(hasNext)); // Update state for next page existence
+      } else {
+        console.error("Unexpected data format:", response.data);
+        setCards([]); // Clear cards if the format is incorrect
+      }
     } catch (err) {
-      console.log(err);
+      console.error("Error fetching events:", err);
+      setCards([]); // Clear cards in case of error
     }
   };
-  useEffect(() => {
-    if (searchParams.get("page")) {
-      fetchActivity();
-    }
-  }, [searchParams.get("page"), searchParams.get("search")]);
 
+  // Fetch data setiap kali `page` atau `search` berubah
   useEffect(() => {
-    if (!searchParams.get("page") || searchParams.get("page") < 1) {
-      searchParams.set("page", 1);
+    fetchActivity();
+  }, [currentPage, searchParams.get("search")]); // Listen to search and page changes
+
+  // Inisialisasi halaman saat pertama kali komponen di-render
+  useEffect(() => {
+    const initialPage = Number(searchParams.get("page")) || 1;
+    if (initialPage < 1) {
+      searchParams.set("page", "1");
       setSearchParams(searchParams);
     }
-  }, []);
+    setCurrentPage(initialPage); // Set initial page from URL parameter
+  }, []); // Only run on component mount
 
-  const cardsActivity = cards.map((card) => {
-    return (
-      <ActivityCard
-        key={card.id}
-        id={card.id}
-        imageUrl={card.imageUrl}
-        name_event={card.name_event}
-        event_type={card.event_type}
-        date_event={card.date_event}
-        location_event={card.location_event}
-      />
-    );
-  });
+  // Render kartu event
+  const cardsActivity = cards.length
+    ? cards.map((card) => {
+        const image =
+          card.imageURL && card.imageURL.length > 0
+            ? card.imageURL[0].image
+            : "";
+        return (
+          <ActivityCard
+            key={card.id}
+            id={card.id}
+            imageURL={image}
+            name_event={card.name_event}
+            event_type={card.event_type}
+            start_event={card.start_event}
+            end_event={card.end_event}
+            location_event={card.location_event}
+          />
+        );
+      })
+    : "Tidak ada event yang ditemukan."; // Fallback jika tidak ada event
 
   return (
     <main className="min-h-[70vh] md:w-auto mx-auto px-8 lg:px-16 mt-20">
@@ -81,6 +112,7 @@ export const MoreEvent = () => {
         <p className="text-xl font-bold ">Cari Aktivitas</p>
         <div className="sm:w-1/2 flex gap-3 mb-8 ">
           <Input
+            value={eventName}
             onChange={(e) => setEventName(e.target.value)}
             placeholder="Cari Event.."
           />
@@ -101,7 +133,7 @@ export const MoreEvent = () => {
       </div>
 
       <EventPagination
-        currentPage={Number(searchParams.get("page"))}
+        currentPage={currentPage}
         hasNext={hasNext}
         onPreviousPage={handlePrevPage}
         onNextPage={handleNextPage}
