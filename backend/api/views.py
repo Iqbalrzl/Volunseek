@@ -14,6 +14,7 @@ from .models import *
 from .serializers import *
 from .permissions import *
 from .filters import *
+from .pagination import *
 
 # Create your views here.
 
@@ -25,6 +26,7 @@ class EventViewSet(ModelViewSet):
     permission_classes = [IsAdminOrReadOnly]
     filter_backends = [SearchFilter, DjangoFilterBackend, OrderingFilter]
     filterset_class = EventFilter
+    pagination_class = EventPagination
     search_fields = ['^title', 'title',
                      'event_type__type', 'description', 'location']
     ordering_fields = ['title', 'start_date']
