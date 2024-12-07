@@ -11,39 +11,46 @@ export const MoreEvent = () => {
   const [cards, setCards] = useState([]);
   const [searchParams, setSearchParams] = useSearchParams();
   const [eventName, setEventName] = useState("");
-  const [previousPage, setPreviousPage] = useState(null);
   const [nextPage, setNextPage] = useState(null);
+  const [previousPage, setPreviousPage] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
+  const [totalCount, setTotalCount] = useState(0);
 
-  const handleNextPage = () => {
-    if (nextPage) {
-      setCurrentPage((prevPage) => prevPage + 1);
-    }
-  };
-
-  const handlePrevPage = () => {
-    if (previousPage) {
-      setCurrentPage((prevPage) => prevPage - 1);
-    }
-  };
-
+  // Fungsi untuk menangani pencarian event
   const searchEvent = () => {
     if (eventName.trim()) {
-      searchParams.set("search", eventName.trim());
-      setSearchParams(searchParams);
+      setSearchParams({ search: eventName.trim(), page: 1 });
+      setCurrentPage(1);
     } else {
-      searchParams.delete("search");
-      setSearchParams(searchParams);
+      setSearchParams({ page: 1 });
+      setCurrentPage(1);
     }
-    setCurrentPage(1);
   };
 
+  // Menangani input saat tombol Enter ditekan
   const handleInput = (e) => {
     if (e.key === "Enter") {
       searchEvent();
     }
   };
 
+  const handleNextPage = () => {
+    if (nextPage) {
+      const nextPageParams = new URL(nextPage).searchParams;
+      setSearchParams(nextPageParams); // Perbarui search params dengan URL halaman berikutnya
+      setCurrentPage((prevPage) => prevPage + 1); // Increment current page
+    }
+  };
+
+  const handlePrevPage = () => {
+    if (previousPage) {
+      const previousPageParams = new URL(previousPage).searchParams;
+      setSearchParams(previousPageParams); // Perbarui search params dengan URL halaman sebelumnya
+      setCurrentPage((prevPage) => prevPage - 1); // Decrement current page
+    }
+  };
+
+  // Fungsi untuk mengambil data berdasarkan pencarian dan halaman
   const fetchActivity = async () => {
     try {
       const response = await axiosInstance.get("api/event/search", {
@@ -53,29 +60,23 @@ export const MoreEvent = () => {
         },
       });
 
-      const { results, next, previous } = response.data;
+      console.log("Response:", response.data); // Log API response
 
-      setCards(results);
-      setNextPage(next);
-      setPreviousPage(previous);
+      const { results, next, previous, count } = response.data;
+      setCards(results); // Simpan data card
+      setNextPage(next); // Simpan URL halaman berikutnya
+      setPreviousPage(previous); // Simpan URL halaman sebelumnya
+      setTotalCount(count); // Set total count untuk menghitung halaman
     } catch (err) {
       console.error("Error fetching events:", err);
-      setCards([]);
+      setCards([]); // Jika terjadi error, set kartu menjadi array kosong
     }
   };
 
+  // Efek untuk memuat data setiap kali page atau search params berubah
   useEffect(() => {
     fetchActivity();
-  }, [currentPage, searchParams.get("search")]);
-
-  useEffect(() => {
-    const initialPage = Number(searchParams.get("page")) || 1;
-    if (initialPage < 1) {
-      searchParams.set("page", "1");
-      setSearchParams(searchParams);
-    }
-    setCurrentPage(initialPage);
-  }, []);
+  }, [currentPage, searchParams]); // Perubahan pada currentPage atau searchParams akan memicu fetchActivity
 
   const cardsActivity = cards.length
     ? cards.map((card) => {
@@ -98,11 +99,15 @@ export const MoreEvent = () => {
       })
     : "Tidak ada event yang ditemukan.";
 
+  // Menghitung jumlah halaman berdasarkan total data dan page size
+  const pageSize = cards.length ? cards.length : totalCount;
+  const totalPages = Math.ceil(totalCount / pageSize);
+
   return (
     <main className="min-h-screen md:w-auto mx-auto px-8 lg:px-16 mt-20">
       <div className="flex flex-col gap-2">
         <p className="text-3xl font-semibold mb-2">Cari Aktivitas</p>
-        <div className="sm:w-1/2 flex gap-3 mb-12 ">
+        <div className="sm:w-1/2 flex gap-3 mb-12">
           <Input
             value={eventName}
             onKeyDown={handleInput}
@@ -121,13 +126,15 @@ export const MoreEvent = () => {
           </Button>
         </div>
       </div>
+
+      {/* Render cards */}
       <div className="grid justify-start sm:justify-center grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mb-10">
         {cardsActivity}
       </div>
 
       <EventPagination
-        className="pb-10"
         currentPage={currentPage}
+        totalPages={totalPages}
         hasNext={Boolean(nextPage)}
         hasPrevious={Boolean(previousPage)}
         onPreviousPage={handlePrevPage}
