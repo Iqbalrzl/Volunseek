@@ -26,12 +26,24 @@ class EventViewSet(ModelViewSet):
     permission_classes = [IsAdminOrReadOnly]
     filter_backends = [SearchFilter, DjangoFilterBackend, OrderingFilter]
     filterset_class = EventFilter
-    pagination_class = EventPagination
     search_fields = ['^title', 'title',
                      'event_type__type', 'description', 'location']
     ordering_fields = ['title', 'start_date']
-    # filterset_fields = ['event_type_id']
 
+    @action(detail=False, methods=['get'], url_path='search')
+    def search(self, request):
+        self.pagination_class = EventPagination
+        queryset = self.filter_queryset(self.get_queryset())
+
+        page = self.paginate_queryset(queryset)
+        if page is not None:
+            serializer = self.get_serializer(page, many=True)
+            return self.get_paginated_response(serializer.data)
+
+        serializer = self.get_serializer(queryset, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+    # filterset_fields = ['event_type_id']
     # def get_queryset(self):
     #     queryset = Event.objects.select_related(
     #         'event_type').prefetch_related('image').all()
