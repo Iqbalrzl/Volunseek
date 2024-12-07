@@ -43,26 +43,15 @@ export const MoreEvent = () => {
     try {
       const response = await axiosInstance.get("api/event/", {
         params: {
-          _per_page: 16,
-          _page: currentPage,
-          name_event: searchParams.get("search") || "",
+          page: currentPage,
+          search: searchParams.get("search") || "",
         },
       });
 
-      // Log untuk memeriksa struktur respons
-      console.log("API Response:", response.data);
+      const { results, next, previous } = response.data;
 
-      // Sesuaikan dengan struktur respons API
-      const { events, hasNext } = response.data;
-
-      if (Array.isArray(events)) {
-        console.log("Setting cards state with events:", events);
-        setCards(events);
-        setHasNext(Boolean(hasNext)); // Update state for next page existence
-      } else {
-        console.error("Unexpected data format:", response.data);
-        setCards([]); // Clear cards if the format is incorrect
-      }
+      setCards(results);
+      setHasNext(Boolean(next)); // Update state for next page existence
     } catch (err) {
       console.error("Error fetching events:", err);
       setCards([]); // Clear cards in case of error
