@@ -43,8 +43,8 @@ export const MoreEvent = () => {
     try {
       const response = await axiosInstance.get("api/event/", {
         params: {
-          per_page: 16,
-          page: currentPage,
+          _per_page: 16,
+          _page: currentPage,
           name_event: searchParams.get("search") || "",
         },
       });
@@ -107,7 +107,7 @@ export const MoreEvent = () => {
     : "Tidak ada event yang ditemukan."; // Fallback jika tidak ada event
 
   return (
-    <main className="min-h-[70vh] md:w-auto mx-auto px-8 lg:px-16 mt-20">
+    <main className="min-h-screen md:w-auto mx-auto px-8 lg:px-16 mt-20">
       <div className="flex flex-col gap-2">
         <p className="text-xl font-bold ">Cari Aktivitas</p>
         <div className="sm:w-1/2 flex gap-3 mb-8 ">
