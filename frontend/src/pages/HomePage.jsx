@@ -6,19 +6,22 @@ import { axiosInstance } from "@/lib/axios";
 import { Link } from "react-router-dom";
 
 export const HomePage = () => {
-  const [cards, setCards] = useState([]); // Menyimpan daftar acara (event)
-  const [loadingCards, setLoadingCards] = useState(true); // Status loading
-  const [error, setError] = useState(null); // Status error
+  const [cards, setCards] = useState([]);
+  const [loadingCards, setLoadingCards] = useState(true);
+  const [error, setError] = useState(null);
 
-  // Mengambil data acara dari API
+  // Ambil data acara dari API
   const fetchActivity = async () => {
     setLoadingCards(true);
-    setError(null); // Reset error ketika memulai pengambilan data
+    setError(null); // Reset error saat memulai pengambilan data
     try {
       const res = await axiosInstance.get("/api/event/");
-      if (res.data && res.data.results) {
-        const maxCards = res.data.results.slice(0, 8);
-        setCards(maxCards);
+      console.log(res.data); // Debugging response API
+
+      // Memilih hanya 8 acara pertama
+      if (res.data && Array.isArray(res.data)) {
+        const events = res.data.slice(0, 8); // Ambil 8 acara pertama
+        setCards(events); // Simpan ke state cards
       } else {
         setError("Data acara tidak ditemukan.");
       }
@@ -26,18 +29,20 @@ export const HomePage = () => {
       console.error("Error fetching data:", err);
       setError("Gagal mengambil data acara.");
     } finally {
-      setLoadingCards(false); // Menghentikan loading setelah API request selesai
+      setLoadingCards(false);
     }
   };
 
   useEffect(() => {
-    fetchActivity(); // Panggil fungsi fetchActivity saat komponen pertama kali dirender
+    fetchActivity(); // Memanggil fungsi fetchActivity saat pertama kali dirender
   }, []);
 
-  // Maping data event ke dalam komponen ActivityCard
+  // Mapping data acara ke dalam ActivityCard
   const cardsActivity = cards.map((card) => {
     const image =
-      card.imageURL && card.imageURL.length > 0 ? card.imageURL[0].image : "";
+      card.imageURL && card.imageURL.length > 0
+        ? card.imageURL[0].image
+        : "/path/to/default/image.png"; // Gambar default jika kosong
     return (
       <ActivityCard
         key={card.id}
@@ -77,13 +82,11 @@ export const HomePage = () => {
       {/* Program Kami Section */}
       <div className="flex-auto">
         <p className="text-3xl font-semibold mb-6">PROGRAM KAMI</p>
-        <div className="flex"></div>
       </div>
 
       {/* Card Section */}
       {loadingCards ? (
         <div className="flex justify-center items-center min-h-[50vh]">
-          {/* Ganti teks loading dengan spinner atau indikator loading lainnya */}
           <p>Loading...</p>
         </div>
       ) : error ? (
@@ -96,19 +99,18 @@ export const HomePage = () => {
             {cardsActivity}
           </div>
 
-          {cards.length > 0 && (
-            <div className="flex justify-center mt-8 mb-12">
-              <Link to={"/more-event"}>
-                <Button
-                  variant="outline"
-                  size="lg"
-                  className="border-[#1ABC9C] text-[#1ABC9C] hover:bg-[#1ABC9C] hover:text-white transition-colors duration-200"
-                >
-                  Lihat Lebih Banyak
-                </Button>
-              </Link>
-            </div>
-          )}
+          {/* Tombol Lihat Lebih Banyak */}
+          <div className="flex justify-center mt-8 mb-12">
+            <Link to={"/more-event"}>
+              <Button
+                variant="outline"
+                size="lg"
+                className="border-[#1ABC9C] text-[#1ABC9C] hover:bg-[#1ABC9C] hover:text-white transition-colors duration-200"
+              >
+                Lihat Lebih Banyak
+              </Button>
+            </Link>
+          </div>
         </>
       )}
     </main>

@@ -4,15 +4,6 @@ import { CalendarDays, MapPin } from "lucide-react";
 import { useEffect } from "react";
 import { Link } from "react-router-dom";
 
-const formatDate = (dateString) => {
-  const date = new Date(dateString);
-  return new Intl.DateTimeFormat("id-ID", {
-    day: "2-digit",
-    month: "short",
-    year: "numeric",
-  }).format(date);
-};
-
 export const ActivityCard = (props) => {
   const {
     id,
@@ -23,6 +14,21 @@ export const ActivityCard = (props) => {
     event_type,
     imageURL,
   } = props;
+
+  const formatDate = (dateString) => {
+    const date = new Date(dateString);
+    return new Intl.DateTimeFormat("id-ID", {
+      day: "2-digit",
+      month: "short",
+      year: "numeric",
+    }).format(date);
+  };
+
+  const truncateTitle = (title, maxLength) => {
+    return title.length > maxLength
+      ? title.substring(0, maxLength) + "..."
+      : title;
+  };
 
   const loadActivity = async () => {
     try {
@@ -56,7 +62,9 @@ export const ActivityCard = (props) => {
         </div>
 
         {/* Title */}
-        <h3 className="text-lg font-semibold mb-2">{name_event}</h3>
+        <h3 className="text-lg font-semibold mb-2">
+          {truncateTitle(name_event, 30)}
+        </h3>
 
         <div className="flex flex-col mb-4 gap-2">
           <div className="flex gap-2 text-[11px] items-center ">

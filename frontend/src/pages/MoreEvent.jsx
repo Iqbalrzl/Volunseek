@@ -8,25 +8,25 @@ import { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 
 export const MoreEvent = () => {
-  const [cards, setCards] = useState([]); // Menyimpan data event
-  const [searchParams, setSearchParams] = useSearchParams(); // Mengatur parameter pencarian di URL
-  const [eventName, setEventName] = useState(""); // Untuk input pencarian event
-  const [hasNext, setHasNext] = useState(false); // Apakah ada halaman berikutnya
-  const [currentPage, setCurrentPage] = useState(1); // Halaman saat ini
+  const [cards, setCards] = useState([]);
+  const [searchParams, setSearchParams] = useSearchParams();
+  const [eventName, setEventName] = useState("");
+  const [previousPage, setPreviousPage] = useState(null);
+  const [nextPage, setNextPage] = useState(null);
+  const [currentPage, setCurrentPage] = useState(1);
 
-  // Mengatur halaman selanjutnya
   const handleNextPage = () => {
-    setCurrentPage((prevPage) => prevPage + 1);
+    if (nextPage) {
+      setCurrentPage((prevPage) => prevPage + 1);
+    }
   };
 
-  // Mengatur halaman sebelumnya
   const handlePrevPage = () => {
-    if (currentPage > 1) {
+    if (previousPage) {
       setCurrentPage((prevPage) => prevPage - 1);
     }
   };
 
-  // Fungsi pencarian event
   const searchEvent = () => {
     if (eventName.trim()) {
       searchParams.set("search", eventName.trim());
@@ -35,13 +35,18 @@ export const MoreEvent = () => {
       searchParams.delete("search");
       setSearchParams(searchParams);
     }
-    setCurrentPage(1); // Reset ke halaman pertama saat pencarian
+    setCurrentPage(1);
   };
 
-  // Mengambil data event dari API
+  const handleInput = (e) => {
+    if (e.key === "Enter") {
+      searchEvent();
+    }
+  };
+
   const fetchActivity = async () => {
     try {
-      const response = await axiosInstance.get("api/event/", {
+      const response = await axiosInstance.get("api/event/search", {
         params: {
           page: currentPage,
           search: searchParams.get("search") || "",
@@ -51,29 +56,27 @@ export const MoreEvent = () => {
       const { results, next, previous } = response.data;
 
       setCards(results);
-      setHasNext(Boolean(next)); // Update state for next page existence
+      setNextPage(next);
+      setPreviousPage(previous);
     } catch (err) {
       console.error("Error fetching events:", err);
-      setCards([]); // Clear cards in case of error
+      setCards([]);
     }
   };
 
-  // Fetch data setiap kali `page` atau `search` berubah
   useEffect(() => {
     fetchActivity();
-  }, [currentPage, searchParams.get("search")]); // Listen to search and page changes
+  }, [currentPage, searchParams.get("search")]);
 
-  // Inisialisasi halaman saat pertama kali komponen di-render
   useEffect(() => {
     const initialPage = Number(searchParams.get("page")) || 1;
     if (initialPage < 1) {
       searchParams.set("page", "1");
       setSearchParams(searchParams);
     }
-    setCurrentPage(initialPage); // Set initial page from URL parameter
-  }, []); // Only run on component mount
+    setCurrentPage(initialPage);
+  }, []);
 
-  // Render kartu event
   const cardsActivity = cards.length
     ? cards.map((card) => {
         const image =
@@ -93,15 +96,16 @@ export const MoreEvent = () => {
           />
         );
       })
-    : "Tidak ada event yang ditemukan."; // Fallback jika tidak ada event
+    : "Tidak ada event yang ditemukan.";
 
   return (
     <main className="min-h-screen md:w-auto mx-auto px-8 lg:px-16 mt-20">
       <div className="flex flex-col gap-2">
-        <p className="text-xl font-bold ">Cari Aktivitas</p>
-        <div className="sm:w-1/2 flex gap-3 mb-8 ">
+        <p className="text-3xl font-semibold mb-2">Cari Aktivitas</p>
+        <div className="sm:w-1/2 flex gap-3 mb-12 ">
           <Input
             value={eventName}
+            onKeyDown={handleInput}
             onChange={(e) => setEventName(e.target.value)}
             placeholder="Cari Event.."
           />
@@ -117,13 +121,15 @@ export const MoreEvent = () => {
           </Button>
         </div>
       </div>
-      <div className="grid justify-start sm:justify-center grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mb-8">
+      <div className="grid justify-start sm:justify-center grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mb-10">
         {cardsActivity}
       </div>
 
       <EventPagination
+        className="pb-10"
         currentPage={currentPage}
-        hasNext={hasNext}
+        hasNext={Boolean(nextPage)}
+        hasPrevious={Boolean(previousPage)}
         onPreviousPage={handlePrevPage}
         onNextPage={handleNextPage}
       />
