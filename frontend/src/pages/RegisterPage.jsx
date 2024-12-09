@@ -25,14 +25,14 @@ export const RegisterPage = () => {
     try {
       setIsLoading(true);
       await axiosInstance.post("auth/users/", formData);
-    } catch (err) {
-      console.log(err);
-      setMessage("");
-    } finally {
       setTimeout(() => {
         navigate("/login");
         setIsLoading(true);
       }, 3000);
+    } catch (err) {
+      console.log(err);
+      setMessage("");
+      setIsLoading(false);
     }
   };
 

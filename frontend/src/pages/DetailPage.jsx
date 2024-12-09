@@ -79,13 +79,6 @@ export const DetailPage = () => {
   const handleEnroll = async (e) => {
     e.preventDefault();
 
-    if (!userSelector.id) {
-      toast({
-        description: "Login dulu ya sebelum mendaftar relawan!",
-      });
-      return;
-    }
-
     const isAlreadyEnrolled = participants.some(
       (participant) => participant.user_id === userSelector.id
     );
@@ -124,7 +117,6 @@ export const DetailPage = () => {
       navigate(`/more-event`);
     } catch (err) {
       console.log(err);
-      alert("Pendaftaran gagal");
     }
   };
 
@@ -167,7 +159,9 @@ export const DetailPage = () => {
                     disabled={participants.length >= detail.max_participants}
                     className="bg-[#1ABC9C] text-white hover:bg-[#1ABC9C] hover:opacity-60 w-1/2"
                   >
-                    Jadi Relawan
+                    {participants.length >= detail.max_participants
+                      ? "Relawan sudah penuh"
+                      : "Jadi Relawan"}
                   </Button>
                 </AlertDialogTrigger>
                 <AlertDialogContent>

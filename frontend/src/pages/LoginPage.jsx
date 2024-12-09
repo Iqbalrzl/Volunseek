@@ -1,5 +1,3 @@
-// LoginPage.jsx
-
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import loginTitle from "@/assets/images/loginTitle.png";
@@ -44,7 +42,7 @@ export const LoginPage = () => {
       });
 
       const userData = userResponse.data;
-
+      // Dispatch action untuk login
       console.log(userData);
       dispatch({
         type: "USER_LOGIN",
@@ -56,15 +54,14 @@ export const LoginPage = () => {
           last_name: userData.last_name,
         },
       });
-
+      setTimeout(() => {
+        setIsLoading(true);
+      }, 1000);
       navigate("/");
     } catch (err) {
       console.log(err);
       setMessage("password atau username salah");
-    } finally {
-      setTimeout(() => {
-        setIsLoading(true);
-      }, 3000);
+      setIsLoading(false);
     }
   };
 

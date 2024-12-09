@@ -32,8 +32,7 @@ export const ActivityCard = (props) => {
 
   const loadActivity = async () => {
     try {
-      const res = await axiosInstance.get("api/event/");
-      console.log(res.data);
+      await axiosInstance.get("api/event/");
     } catch (err) {
       console.log(err);
     }

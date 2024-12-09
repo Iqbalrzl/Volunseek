@@ -16,7 +16,6 @@ export const HomePage = () => {
     setError(null); // Reset error saat memulai pengambilan data
     try {
       const res = await axiosInstance.get("/api/event/");
-      console.log(res.data);
 
       if (res.data && Array.isArray(res.data)) {
         const events = res.data.slice(0, 8); // Ambil 8 acara pertama

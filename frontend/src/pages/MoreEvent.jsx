@@ -62,7 +62,6 @@ export const MoreEvent = () => {
       });
 
       const { results, next, previous, count } = response.data;
-      console.log(response.data);
 
       setCards(results);
       setNextPage(next);
