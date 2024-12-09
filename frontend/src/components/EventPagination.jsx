@@ -13,7 +13,7 @@ export const EventPagination = ({
   onNextPage,
 }) => {
   return (
-    <Pagination>
+    <Pagination className="pb-4">
       <PaginationContent>
         <PaginationItem>
           <Button

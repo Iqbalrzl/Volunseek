@@ -2,6 +2,7 @@ import { ActivityCard } from "@/components/ActivityCard";
 import { EventPagination } from "@/components/EventPagination";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { Toaster } from "@/components/ui/toaster";
 import { axiosInstance } from "@/lib/axios";
 import { Filter } from "lucide-react";
 import { useEffect, useState } from "react";
@@ -63,13 +64,13 @@ export const MoreEvent = () => {
       const { results, next, previous, count } = response.data;
       console.log(response.data);
 
-      setCards(results); // Simpan data card
-      setNextPage(next); // Simpan URL halaman berikutnya
-      setPreviousPage(previous); // Simpan URL halaman sebelumnya
-      setTotalCount(count); // Set total count untuk menghitung halaman
+      setCards(results);
+      setNextPage(next);
+      setPreviousPage(previous);
+      setTotalCount(count);
     } catch (err) {
       console.error("Error fetching events:", err);
-      setCards([]); // Jika terjadi error, set kartu menjadi array kosong
+      setCards([]);
     }
   };
 
@@ -141,6 +142,8 @@ export const MoreEvent = () => {
         onPreviousPage={handlePrevPage}
         onNextPage={handleNextPage}
       />
+
+      <Toaster />
     </main>
   );
 };

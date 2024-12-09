@@ -1,17 +1,31 @@
 import { axiosInstance } from "@/lib/axios";
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { DetailContent } from "@/components/DetailContent";
 import { Card, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { useDispatch, useSelector } from "react-redux";
 import { User } from "lucide-react";
+import {
+  AlertDialog,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
+import { useToast } from "@/hooks/use-toast";
+import { Toaster } from "@/components/ui/toaster";
 
 export const DetailPage = () => {
   const params = useParams();
   const profileSelector = useSelector((state) => state.profile);
-  // const userSelector = useSelector((state) => state.user);
+  const userSelector = useSelector((state) => state.user);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const [participants, setParticipants] = useState([]); // State untuk menyimpan data peserta
+  const { toast } = useToast();
 
   const [detail, setDetail] = useState({
     id: 0,
@@ -25,9 +39,6 @@ export const DetailPage = () => {
     max_participants: "",
   });
 
-  const [participants, setParticipants] = useState([]); // State untuk menyimpan data peserta
-
-  // Format Tanggal
   const formatDate = (dateString) => {
     if (!dateString) return "Tanggal tidak tersedia";
     const date = new Date(dateString);
@@ -39,7 +50,6 @@ export const DetailPage = () => {
     }).format(date);
   };
 
-  // Fetch Detail Event
   const fetchActivity = async (eventId) => {
     try {
       const res = await axiosInstance.get(`/api/event/${eventId}/`);
@@ -51,7 +61,6 @@ export const DetailPage = () => {
     }
   };
 
-  // Fetch Peserta
   const fetchParticipants = async () => {
     try {
       const res = await axiosInstance.get(
@@ -70,14 +79,30 @@ export const DetailPage = () => {
   const handleEnroll = async (e) => {
     e.preventDefault();
 
-    const volunteerData = {
-      user: profileSelector.user,
-    };
+    if (!userSelector.id) {
+      toast({
+        description: "Login dulu ya sebelum mendaftar relawan!",
+      });
+      return;
+    }
+
+    const isAlreadyEnrolled = participants.some(
+      (participant) => participant.user_id === userSelector.id
+    );
+
+    if (isAlreadyEnrolled) {
+      toast({
+        description: "Anda sudah menjadi volunteer di acara ini",
+      });
+      return;
+    }
 
     try {
       const response = await axiosInstance.post(
         `/api/event/${params.eventId}/enrollment/`,
-        volunteerData
+        {
+          user: profileSelector.user,
+        }
       );
 
       dispatch({
@@ -90,9 +115,13 @@ export const DetailPage = () => {
         },
       });
 
-      alert("Pendaftaran berhasil!");
+      toast({
+        title: "Berhasil menjadi Relawan!",
+        description: `Kamu sekarang sudah menjadi relawan di acara ${detail.name_event}!`,
+      });
+
       fetchParticipants();
-      console.log(participants);
+      navigate(`/more-event`);
     } catch (err) {
       console.log(err);
       alert("Pendaftaran gagal");
@@ -131,15 +160,34 @@ export const DetailPage = () => {
             <p>{detail.desc}</p>
 
             <div className="flex flex-col mt-2">
-              <Button
-                disabled={participants.length >= detail.max_participants}
-                onClick={handleEnroll}
-                className="bg-[#1ABC9C] text-white hover:bg-[#1ABC9C] hover:opacity-60 w-1/2"
-              >
-                {participants.length >= detail.max_participants
-                  ? "Relawan Sudah Penuh"
-                  : "Jadi Relawan"}
-              </Button>
+              <AlertDialog>
+                <AlertDialogTrigger asChild>
+                  <Button
+                    variant="outline"
+                    disabled={participants.length >= detail.max_participants}
+                    className="bg-[#1ABC9C] text-white hover:bg-[#1ABC9C] hover:opacity-60 w-1/2"
+                  >
+                    Jadi Relawan
+                  </Button>
+                </AlertDialogTrigger>
+                <AlertDialogContent>
+                  <AlertDialogHeader>
+                    <AlertDialogTitle>
+                      Mau jadi Relawan di acara ini?
+                    </AlertDialogTitle>
+                  </AlertDialogHeader>
+                  <AlertDialogFooter>
+                    <AlertDialogCancel>Cancel</AlertDialogCancel>
+                    <Button onClick={handleEnroll}>
+                      {!userSelector.id ? (
+                        <Link to={"/login"}>Jadi Relawan</Link>
+                      ) : (
+                        "Jadi Relawan"
+                      )}
+                    </Button>
+                  </AlertDialogFooter>
+                </AlertDialogContent>
+              </AlertDialog>
             </div>
           </div>
         </div>
@@ -169,6 +217,7 @@ export const DetailPage = () => {
           )}
         </Card>
       </div>
+      <Toaster />
     </main>
   );
 };

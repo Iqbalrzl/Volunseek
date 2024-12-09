@@ -74,15 +74,12 @@ export const ActivityCard = (props) => {
             <p className=" text-gray-600 ">{formatDate(end_event)}</p>
           </div>
 
-          {/* Location */}
           <div className="flex gap-2 text-[11px] items-center">
             <MapPin className="w-5 h-5 items-start flex" />
             <p className=" text-gray-600  items-center">{location_event}</p>
           </div>
         </div>
-        {/* Date Range */}
 
-        {/* Button */}
         <Link to={"/detail-activity/" + id}>
           <Button className="w-full bg-[#D1F2EB] text-primary hover:bg-[#D1F2EB] hover:opacity-60">
             Lihat Lebih Lengkap

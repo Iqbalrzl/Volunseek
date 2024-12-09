@@ -11,9 +11,8 @@ export const RegisterPage = () => {
     email: "",
     password: "",
   });
-
+  const [isLoading, setIsLoading] = useState(false);
   const [message, setMessage] = useState("");
-  const [error, setError] = useState("");
   const navigate = useNavigate();
 
   const handleInputChange = (e) => {
@@ -24,15 +23,16 @@ export const RegisterPage = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
+      setIsLoading(true);
       await axiosInstance.post("auth/users/", formData);
-      setMessage("Registration successful! Please login.");
-      setError("");
-      setTimeout(() => {
-        navigate("/login");
-      }, 2000);
     } catch (err) {
       console.log(err);
       setMessage("");
+    } finally {
+      setTimeout(() => {
+        navigate("/login");
+        setIsLoading(true);
+      }, 3000);
     }
   };
 
@@ -84,13 +84,14 @@ export const RegisterPage = () => {
             <Button
               type="submit"
               className="w-full bg-[#1ABC9C] text-white hover:bg-[#1ABC9C] hover:opacity-60"
+              disabled={isLoading}
             >
-              Register
+              {isLoading ? "Akun mu sedang diproses..." : "Daftar"}
             </Button>
             {message && (
               <p className="text-green-500 text-center mt-2">{message}</p>
             )}
-            {error && <p className="text-red-500 text-center mt-2">{error}</p>}
+
             <Link to={"/login"}>
               <p className="mt-4 text-sky-600">Sudah punya akun</p>
             </Link>

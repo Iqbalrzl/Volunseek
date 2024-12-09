@@ -16,9 +16,8 @@ export const HomePage = () => {
     setError(null); // Reset error saat memulai pengambilan data
     try {
       const res = await axiosInstance.get("/api/event/");
-      console.log(res.data); // Debugging response API
+      console.log(res.data);
 
-      // Memilih hanya 8 acara pertama
       if (res.data && Array.isArray(res.data)) {
         const events = res.data.slice(0, 8); // Ambil 8 acara pertama
         setCards(events); // Simpan ke state cards
@@ -34,15 +33,12 @@ export const HomePage = () => {
   };
 
   useEffect(() => {
-    fetchActivity(); // Memanggil fungsi fetchActivity saat pertama kali dirender
+    fetchActivity();
   }, []);
 
-  // Mapping data acara ke dalam ActivityCard
   const cardsActivity = cards.map((card) => {
     const image =
-      card.imageURL && card.imageURL.length > 0
-        ? card.imageURL[0].image
-        : "/path/to/default/image.png"; // Gambar default jika kosong
+      card.imageURL && card.imageURL.length > 0 ? card.imageURL[0].image : "";
     return (
       <ActivityCard
         key={card.id}
@@ -68,13 +64,15 @@ export const HomePage = () => {
             <p className="text-white font-medium text-3xl mb-8">
               Bersama kita bisa membuat perubahan. Jadilah relawan!
             </p>
-            <Button
-              variant="secondary"
-              size="lg"
-              className="bg-white text-[#1ABC9C] border-none hover:bg-[#1ABC9C] hover:text-white transition-colors duration-200"
-            >
-              Jadi Relawan Sekarang
-            </Button>
+            <Link to={"/more-event"}>
+              <Button
+                variant="secondary"
+                size="lg"
+                className="bg-white text-[#1ABC9C] border-none hover:bg-[#1ABC9C] hover:text-white transition-colors duration-200"
+              >
+                Cari Kegiatan Mu!
+              </Button>
+            </Link>
           </div>
         </div>
       </div>

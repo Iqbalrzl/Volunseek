@@ -13,7 +13,7 @@ export const LoginPage = () => {
     username: "",
     password: "",
   });
-
+  const [isLoading, setIsLoading] = useState(false);
   const [message, setMessage] = useState("");
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -31,6 +31,7 @@ export const LoginPage = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
+      setIsLoading(true);
       const response = await axiosInstance.post("auth/jwt/create/", formData);
       localStorage.setItem("accessToken", response.data.access);
       localStorage.setItem("refreshToken", response.data.refresh);
@@ -43,7 +44,7 @@ export const LoginPage = () => {
       });
 
       const userData = userResponse.data;
-      // Dispatch action untuk login
+
       console.log(userData);
       dispatch({
         type: "USER_LOGIN",
@@ -56,10 +57,14 @@ export const LoginPage = () => {
         },
       });
 
-      navigate("/"); // Setelah login, navigate ke home
+      navigate("/");
     } catch (err) {
       console.log(err);
       setMessage("password atau username salah");
+    } finally {
+      setTimeout(() => {
+        setIsLoading(true);
+      }, 3000);
     }
   };
 
@@ -100,8 +105,9 @@ export const LoginPage = () => {
             <Button
               type="submit"
               className="w-full bg-[#1ABC9C] text-white hover:bg-[#1ABC9C] hover:opacity-60"
+              disabled={isLoading}
             >
-              Login
+              {isLoading ? "Sedang memuat data..." : "Masuk"}
             </Button>
             {message && (
               <p className="text-red-500 text-center mt-2">{message}</p>
