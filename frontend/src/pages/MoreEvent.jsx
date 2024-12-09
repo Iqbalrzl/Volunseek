@@ -60,9 +60,9 @@ export const MoreEvent = () => {
         },
       });
 
-      console.log("Response:", response.data); // Log API response
-
       const { results, next, previous, count } = response.data;
+      console.log(response.data);
+
       setCards(results); // Simpan data card
       setNextPage(next); // Simpan URL halaman berikutnya
       setPreviousPage(previous); // Simpan URL halaman sebelumnya
@@ -132,6 +132,7 @@ export const MoreEvent = () => {
         {cardsActivity}
       </div>
 
+      {/* Pagination */}
       <EventPagination
         currentPage={currentPage}
         totalPages={totalPages}
