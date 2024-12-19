@@ -86,7 +86,7 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'Volunseek',
-        'HOST': 'localhost',
+        'HOST': '3306',
         'USER': 'root',
         'PASSWORD': 'inirheno5'
     }
