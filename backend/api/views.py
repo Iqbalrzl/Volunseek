@@ -245,7 +245,6 @@ class ParticipantViewSet(ListModelMixin, CreateModelMixin, RetrieveModelMixin, U
             return [AllowAny()]
         return super().get_permissions()
 
-    # ,permission_classes=[IsAuthenticated])
     @action(detail=False, methods=['GET', 'PUT'], permission_classes=[IsAuthenticated])
     def me(self, request):
         (participant, created) = Participant.objects.get_or_create(

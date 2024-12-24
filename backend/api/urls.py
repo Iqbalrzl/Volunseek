@@ -22,9 +22,9 @@ urlpatterns = [
     path('', include(event_router.urls)),
     path('events/',
          EventList.as_view(), name='api-events'),
-    path('events/<int:pk>/', EventDetails.as_view(), name='api-events_detail'),
-    path('event_types/', EventTypeList.as_view(), name='api-event_type'),
-    path('event_types/<int:pk>/', EventTypeDetail.as_view(),
-         name='api-event_type-detail'),
-    path('enrollments/', EnrollmentList.as_view())
+    #     path('events/<int:pk>/', EventDetails.as_view(), name='api-events_detail'),
+    #     path('event_types/', EventTypeList.as_view(), name='api-event_type'),
+    #     path('event_types/<int:pk>/', EventTypeDetail.as_view(),
+    #          name='api-event_type-detail'),
+    #     path('enrollments/', EnrollmentList.as_view())
 ]
