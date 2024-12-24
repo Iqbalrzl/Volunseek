@@ -1,9 +1,25 @@
 import { useState } from "react";
+import { z } from "zod";
 import loginTitle from "@/assets/images/loginTitle.png";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { axiosInstance } from "@/lib/axios"; // Konfigurasi axios harus sesuai
+import { axiosInstance } from "@/lib/axios";
 import { Link, useNavigate } from "react-router-dom";
+
+// Skema Validasi Zod
+const zodRegisterSchema = z.object({
+  username: z
+    .string()
+    .max(20, { message: "Username maksimal 20 karakter" })
+    .regex(/^[a-zA-Z0-9_]+$/, {
+      message: "Username hanya boleh berisi huruf, angka, dan underscore",
+    }),
+
+  email: z
+    .string()
+    .email({ message: "Format email tidak valid" })
+    .max(100, { message: "Email terlalu panjang" }),
+});
 
 export const RegisterPage = () => {
   const [formData, setFormData] = useState({
@@ -11,27 +27,100 @@ export const RegisterPage = () => {
     email: "",
     password: "",
   });
+
+  // State untuk menyimpan error spesifik
+  const [errors, setErrors] = useState({
+    username: "",
+    email: "",
+    password: "",
+    general: "",
+  });
+
   const [isLoading, setIsLoading] = useState(false);
-  const [message, setMessage] = useState("");
   const navigate = useNavigate();
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
+    setFormData((prev) => ({ ...prev, [name]: value }));
+
+    if (errors[name]) {
+      setErrors((prev) => ({ ...prev, [name]: "" }));
+    }
+  };
+
+  const validateForm = () => {
+    try {
+      zodRegisterSchema.parse(formData);
+
+      setErrors({ username: "", email: "", password: "", general: "" });
+      return true;
+    } catch (error) {
+      if (error instanceof z.ZodError) {
+        const formErrors = {
+          username: "",
+          email: "",
+          password: "",
+          general: "",
+        };
+        error.errors.forEach((err) => {
+          formErrors[err.path[0]] = err.message;
+        });
+        setErrors(formErrors);
+      }
+      return false;
+    }
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    setErrors({ username: "", email: "", password: "", general: "" });
+
+    if (!validateForm()) {
+      return;
+    }
+
     try {
       setIsLoading(true);
+
       await axiosInstance.post("auth/users/", formData);
-      setTimeout(() => {
-        navigate("/login");
-        setIsLoading(true);
-      }, 3000);
+
+      navigate("/login");
     } catch (err) {
-      console.log(err);
-      setMessage("");
+      if (err.response && err.response.data) {
+        const backendErrors = err.response.data;
+
+        const newErrors = {
+          username: "",
+          email: "",
+          password: "",
+          general: "",
+        };
+
+        if (backendErrors.username) {
+          newErrors.username = "Username sudah digunakan";
+        }
+
+        if (backendErrors.email) {
+          newErrors.email = "Email sudah terdaftar";
+        }
+
+        // Jika ada error lain yang tidak terduga
+        if (Object.keys(backendErrors).length === 0) {
+          newErrors.general = "Registrasi gagal. Silakan coba lagi.";
+        }
+
+        // Set error
+        setErrors(newErrors);
+      } else {
+        // Error jaringan atau server
+        setErrors((prev) => ({
+          ...prev,
+          general: "Terjadi kesalahan. Silakan coba lagi.",
+        }));
+      }
+
+      // Matikan loading
       setIsLoading(false);
     }
   };
@@ -54,11 +143,14 @@ export const RegisterPage = () => {
               <Input
                 type="text"
                 name="username"
-                placeholder="Username"
+                placeholder="Nama Panggilan"
                 value={formData.username}
                 onChange={handleInputChange}
-                required
+                className={errors.username ? "border-red-500" : ""}
               />
+              {errors.username && (
+                <p className="text-red-500 text-sm mt-1">{errors.username}</p>
+              )}
             </div>
             <div>
               <Input
@@ -67,20 +159,28 @@ export const RegisterPage = () => {
                 placeholder="Email"
                 value={formData.email}
                 onChange={handleInputChange}
-                required
+                className={errors.email ? "border-red-500" : ""}
               />
+              {errors.email && (
+                <p className="text-red-500 text-sm mt-1">{errors.email}</p>
+              )}
             </div>
             <div>
               <Input
                 type="password"
                 name="password"
-                placeholder="Password"
+                placeholder="Kata Sandi"
                 value={formData.password}
                 onChange={handleInputChange}
-                required
-                minLength={8}
+                className={errors.password ? "border-red-500" : ""}
               />
+              {errors.password && (
+                <p className="text-red-500 text-sm mt-1">{errors.password}</p>
+              )}
             </div>
+            {errors.general && (
+              <div className="text-red-500 text-center">{errors.general}</div>
+            )}
             <Button
               type="submit"
               className="w-full bg-[#1ABC9C] text-white hover:bg-[#1ABC9C] hover:opacity-60"
@@ -88,9 +188,6 @@ export const RegisterPage = () => {
             >
               {isLoading ? "Akun mu sedang diproses..." : "Daftar"}
             </Button>
-            {message && (
-              <p className="text-green-500 text-center mt-2">{message}</p>
-            )}
 
             <Link to={"/login"}>
               <p className="mt-4 text-sky-600">Sudah punya akun</p>
