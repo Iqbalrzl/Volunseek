@@ -104,6 +104,9 @@ export const RegisterPage = () => {
         if (backendErrors.email) {
           newErrors.email = "Email sudah terdaftar";
         }
+        if (backendErrors.password) {
+          newErrors.password = "panjang password minimal 8 karakter";
+        }
 
         // Jika ada error lain yang tidak terduga
         if (Object.keys(backendErrors).length === 0) {
