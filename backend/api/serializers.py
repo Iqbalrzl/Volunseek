@@ -38,9 +38,6 @@ class EventSerializer(serializers.ModelSerializer):
     end_event = serializers.DateField(source='end_date')
     location_event = serializers.CharField(max_length=255, source='location')
     event_type = serializers.StringRelatedField()
-    #  or serializers.HyperlinkedRelatedField(
-    #     queryset=EventType.objects.all(),
-    #     view_name='api-event_type-detail')
     imageURL = EventImageSerializer(many=True, read_only=True, source='image')
     desc = serializers.CharField(
         max_length=None, allow_blank=True, allow_null=True, source='description')

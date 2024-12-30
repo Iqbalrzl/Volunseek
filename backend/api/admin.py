@@ -112,12 +112,3 @@ class EnrollmentAdmin(admin.ModelAdmin):
                 'id': str(enrollment.event.id)
             }))
         return format_html('<a href="{}">{}</a>', url, enrollment.event.title)
-
-    # def participant_(self, enrollment):
-    #     url = (
-    #         reverse('admin:api_participant_changelist')
-    #         + '?'
-    #         + urlencode({
-    #             'id': str(enrollment.participant.id)
-    #         }))
-    #     return format_html('<a href="{}">{}</a>', url, enrollment.participant.username)

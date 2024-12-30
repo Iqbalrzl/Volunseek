@@ -120,10 +120,6 @@ export const MoreEvent = () => {
           >
             Cari
           </Button>
-          <Button variant="outline" className="p-3 flex justify-end">
-            <Filter className="mr-1" />
-            Filter
-          </Button>
         </div>
       </div>
 

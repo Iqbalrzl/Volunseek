@@ -31,12 +31,6 @@ export const AboutUs = () => {
               terlibat dalam sebab-sebab yang mereka pedulikan.
             </p>
             <div className="mt-6">
-              <Link
-                to="/volunteer"
-                className="bg-primary text-white px-6 py-3 rounded-md hover:bg-primaryDark inline-block"
-              >
-                Bergabung Sekarang
-              </Link>
             </div>
           </div>
         </div>

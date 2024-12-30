@@ -5,7 +5,7 @@ export const ImageSlide = () => {
     <Carousel className="rounded-xl relative" navigation={() => null}>
       <div className="relative">
         <img
-          src="https://th.bing.com/th/id/OIP.I9WeCF7vg_T3z26krP9MhgHaEK?w=295&h=180&c=7&r=0&o=5&dpr=1.9&pid=1.7"
+          src="http://127.0.0.1:8000/media/event/images/Seattle-Area_Volunteer_Opportunities_for_Families.jpeg"
           alt="image 1"
           className="h-80 w-full object-cover"
         />
@@ -14,7 +14,7 @@ export const ImageSlide = () => {
 
       <div className="relative">
         <img
-          src="https://th.bing.com/th/id/OIP.lRwhtNWVMNnnK8KZx56nagHaE7?w=261&h=180&c=7&r=0&o=5&dpr=1.9&pid=1.7"
+          src="http://127.0.0.1:8000/media/event/images/1285856c492a8ef5bef18bbcc9a060e8.jpg"
           alt="image 2"
           className="h-80 w-full object-cover"
         />
@@ -23,7 +23,7 @@ export const ImageSlide = () => {
 
       <div className="relative">
         <img
-          src="https://inilahonline.com/wp-content/uploads/2017/12/Relawan-RZ-1.jpg"
+          src="http://127.0.0.1:8000/media/event/images/Look_how_far_weve_come__Volunteering.jpeg"
           alt="image 3"
           className="h-80 w-full object-cover"
         />

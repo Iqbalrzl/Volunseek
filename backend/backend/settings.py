@@ -90,7 +90,7 @@ DATABASES = {
         'NAME': 'Volunseek',
         'HOST': 'localhost',
         'USER': 'root',
-        'PASSWORD': '03092002'
+        'PASSWORD': ''
     }
 }
 

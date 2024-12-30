@@ -43,117 +43,6 @@ class EventViewSet(ModelViewSet):
         serializer = self.get_serializer(queryset, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
-    # filterset_fields = ['event_type_id']
-    # def get_queryset(self):
-    #     queryset = Event.objects.select_related(
-    #         'event_type').prefetch_related('image').all()
-    #     eventtype_id = self.request.query_params.get('event_type_id')
-    #     if eventtype_id is not None:
-    #         queryset = queryset.filter(event_type_id=eventtype_id)
-    #     return queryset
-
-
-class EventList(APIView):
-    permission_classes = [IsAdminOrReadOnly]
-
-    def get(self, request):
-        queryset = Event.objects.select_related('event_type').all()
-        serializer = EventSerializer(
-            queryset, many=True, context={'request': request})
-        return Response(serializer.data)
-
-    def post(self, request):
-        serializer = EventSerializer(data=request.data)
-        serializer.is_valid(raise_exception=True)
-        serializer.save()
-        return Response(serializer.data, status=status.HTTP_201_CREATED)
-
-
-# @api_view(['GET', 'POST'])
-# def event_list(request):
-#     if request.method == 'GET':
-#         queryset = Event.objects.select_related('event_type').all()
-#         serializer = EventSerializer(
-#             queryset, many=True, context={'request': request})
-#         return Response(serializer.data)
-#     elif request.method == 'POST':
-#         serializer = EventSerializer(data=request.data)
-#         serializer.is_valid(raise_exception=True)
-#         serializer.save()
-#         return Response(serializer.data, status=status.HTTP_201_CREATED)
-
-class EventDetails(APIView):
-    permission_classes = [AllowAny]
-
-    def get(self, request, pk):
-        event = get_object_or_404(Event, pk=pk)
-        serializer = EventSerializer(event)
-        return Response(serializer.data)
-
-    def put(self, request, pk):
-        event = get_object_or_404(Event, pk=pk)
-        serializer = EventSerializer(event, data=request.data)
-        serializer.is_valid(raise_exception=True)
-        serializer.save()
-        return Response(serializer.data)
-
-    def delete(self, request, pk):
-        event = get_object_or_404(Event, pk=pk)
-        if event.event.count() > 0:
-            return Response({'error': 'Event cannot be deleted because it associated with enrollment.'}, status=status.HTTP_405_METHOD_NOT_ALLOWED)
-        event.delete()
-        return Response(status=status.HTTP_204_NO_CONTENT)
-
-
-# @api_view(['GET', 'PUT', 'DELETE'])
-# def event_detail(request, pk):
-#     event = get_object_or_404(Event, pk=pk)
-#     if request.method == 'GET':
-#         serializer = EventSerializer(event)
-#         return Response(serializer.data)
-#     elif request.method == 'PUT':
-#         serializer = EventSerializer(event, data=request.data)
-#         serializer.is_valid(raise_exception=True)
-#         serializer.save()
-#         return Response(serializer.data)
-#     elif request.method == 'DELETE':
-#         if event.enrollment.event.count() > 0:
-#             return Response({'error': 'Event cannot be deleted because it associated with enrollment.'}, status=status.HTTP_405_METHOD_NOT_ALLOWED)
-#         event.delete()
-#         return Response(status=status.HTTP_204_NO_CONTENT)
-
-
-class EventTypeList(ListCreateAPIView):
-    permission_classes = [IsAdminOrReadOnly]
-
-    def get_queryset(self):
-        return EventType.objects.all()
-
-    def get_serializer_class(self):
-        return EventTypeSerializer
-
-
-# @api_view()
-# def event_type_list(request):
-#     queryset = EventType.objects.all()
-#     serializer = EventTypeSerializer(queryset, many=True)
-#     return Response(serializer.data)
-
-class EventTypeDetail(RetrieveUpdateDestroyAPIView):
-    permission_classes = [IsAdminOrReadOnly]
-
-    def get_queryset(self):
-        return EventType.objects.all()
-
-    def get_serializer_class(self):
-        return EventTypeSerializer
-
-
-# @api_view()
-# def event_type_detail(request, pk):
-#     type = get_object_or_404(EventType, pk=pk)
-#     serializer = EventTypeSerializer(type)
-#     return Response(serializer.data)
 
 class EventDetailViewSet(ListModelMixin, RetrieveModelMixin, CreateModelMixin, UpdateModelMixin, GenericViewSet):
     queryset = EventDetail.objects.select_related('event').all()
@@ -161,7 +50,7 @@ class EventDetailViewSet(ListModelMixin, RetrieveModelMixin, CreateModelMixin, U
     permission_classes = [IsAdminOrReadOnly]
 
 
-class NestedEventDetailViewSet(ListModelMixin, GenericViewSet):
+class NestedEventDetailViewSet(ListModelMixin, RetrieveModelMixin, CreateModelMixin, UpdateModelMixin, GenericViewSet):
     serializer_class = NestedEventDetailSerializer
     permission_classes = [IsAdminOrReadOnly]
 
@@ -171,6 +60,12 @@ class NestedEventDetailViewSet(ListModelMixin, GenericViewSet):
 
     def get_serializer_context(self):
         return {'event_id': self.kwargs['event_pk']}
+
+    def create(self, request, *args, **kwargs):
+        event_detail = self.get_queryset()
+        if event_detail:
+            return Response(data={'details': 'Event details already exist.'}, status=status.HTTP_405_METHOD_NOT_ALLOWED)
+        return super().create(request, *args, **kwargs)
 
 
 class EventImageViewSet(ModelViewSet):
@@ -206,21 +101,6 @@ class CreateEnrollmentViewSet(ListModelMixin, RetrieveModelMixin, CreateModelMix
     def get_serializer_context(self):
         event_id = self.kwargs['event_pk']
         return {'event_id': event_id, 'user_id': self.request.user.id}
-
-
-class EnrollmentList(APIView):
-    def get(self, request):
-        queryset = Enrollment.objects.select_related(
-            'event').select_related('participant').all()
-        serializer = EnrollmentSerializer(
-            queryset, many=True, context={'request': request})
-        return Response(serializer.data)
-
-    def post(self, request):
-        serializer = EnrollmentSerializer(data=request.data)
-        serializer.is_valid(raise_exception=True)
-        serializer.save()
-        return Response(serializer.data, status=status.HTTP_201_CREATED)
 
 
 class ParticipantViewSet(ListModelMixin, CreateModelMixin, RetrieveModelMixin, UpdateModelMixin, GenericViewSet):
